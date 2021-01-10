@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Trimatrix Lab">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+
+    <title>Bussines Card</title>
+    <link rel="icon" href="images/site/fav-icon.png">
+
+    <!--APPLE TOUCH ICON-->
+    <link rel="apple-touch-icon" href="images/site/apple-touch-icon.png">
+
+
+    <!-- GOOGLE FONT -->
+    <link href='https://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+
+
+    <!-- MATERIAL ICON FONT -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+          integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+    <!-- ANIMATION -->
+    <link href="stylesheets/vendors/animate.min.css" rel="stylesheet">
+
+    <!-- MAGNIFICENT POPUP -->
+    <link href="stylesheets/vendors/magnific-popup.css" rel="stylesheet">
+
+    <!-- SWIPER -->
+    <link href="stylesheets/vendors/swiper.min.css" rel="stylesheet">
+
+
+    <!-- MATERIALIZE -->
+    <link href="stylesheets/vendors/materialize.css" rel="stylesheet">
+    <!-- BOOTSTRAP -->
+    <link href="stylesheets/vendors/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CUSTOM STYLE -->
+    <link href="stylesheets/style_dark_dark.css" id="switch_style" rel="stylesheet">
+
+</head>
+<body>
+
+
+<!--==========================================
+                  PRE-LOADER
+===========================================-->
+<div id="loading">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div class="box-holder animated bounceInDown">
+                <span class="load-box"><span class="box-inner"></span></span>
+            </div>
+            <!-- NAME & STATUS -->
+            <div class="text-holder text-center">
+                <h2 id="h-carga-nombre"></h2>
+                <h6 id="h-carga-expertise"></h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--==========================================
+                    HEADER
+===========================================-->
+<header id="home">
+    <nav id="theMenu" class="menu">
+
+        <!--MENU-->
+        <div id="menu-options" class="menu-wrap">
+
+            <!--PERSONAL LOGO-->
+            <div class="logo-flat">
+                <img alt="personal-logo" class="img-responsive" id="img-logo" src="images/logos/cahum_logo.png">
+            </div>
+            <br>
+
+            <!--OPTIONS-->
+            <a href="#home"><i class="title-icon fas fa-user"></i>Inicio</a>
+            <a href="#education"><i class="title-icon fas fa-graduation-cap"></i>Education</a>
+            <a href="#skills"><i class="title-icon fas fa-sliders-h"></i>Skills</a>
+            <a href="#experience"><i class="title-icon fas fa-suitcase"></i>Experiencia</a>
+            <a href="#contact"><i class="title-icon fas fa-envelope"></i>Contacto</a>
+        </div>
+
+        <!-- MENU BUTTON -->
+        <div id="menuToggle">
+            <div class="toggle-normal">
+                <i class="material-icons top-bar">remove</i>
+                <i class="material-icons middle-bar">remove</i>
+                <i class="material-icons bottom-bar">remove</i>
+            </div>
+        </div>
+    </nav>
+
+    <!--HEADER BACKGROUND-->
+    <div class="header-background section"></div>
+
+</header>
+
+
+<!--==========================================
+                   V-CARD
+===========================================-->
+<div id="v-card-holder" class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <!-- V-CARD -->
+                <div id="v-card" class="card">
+
+                    <!-- PROFILE PICTURE -->
+                    <div id="profile" class="right">
+                        <img alt="profile-image" id="img-perfil" class="img-responsive" src="">
+                        <div class="slant"></div>
+
+                        <!--EMPTY PLUS BUTTON-->
+                        <!--<div class="btn-floating btn-large add-btn"><i class="material-icons">add</i></div>-->
+
+                        <!--VIDEO PLAY BUTTON-->
+                    </div>
+                    <!--VIDEO CLOSE BUTTON-->
+                    <div id="close-btn" class="btn-floating icon-close">
+                        <i class="fas fa-close"></i>
+                    </div>
+
+                    <div class="card-content">
+
+                        <!-- NAME & STATUS -->
+                        <div class="info-headings">
+                            <h4 class="text-uppercase left" id="h-nombre-intro"></h4>
+                            <h6 class="text-capitalize left" id="h-expertise-intro"></h6>
+                        </div>
+
+                        <!-- CONTACT INFO -->
+                        <div class="infos">
+                            <ul id="ul-perfil" class="profile-list">
+                                <li class="clearfix">
+                                    <span class="title"><i class="material-icons">phone</i></span>
+                                    <span id="span-cel" class="content"></span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="title"><i class="material-icons">place</i></span>
+                                    <span class="content" id="span-ubicacion"></span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!--LINKS-->
+                        <div class="links" id="div-redes-personales">
+                            Redes Personales
+                            <!-- FACEBOOK-->
+                        </div>
+                        <div id="div-redes-cooorporativas" class="links">
+                            Redes Coorporativas
+                        </div>
+                    </div>
+                    <!--HTML 5 VIDEO-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--==========================================
+                   EDUCATION
+===========================================-->
+<section id="education" class="section">
+    <div class="container">
+        <!-- SECTION TITLE -->
+        <div class="section-title">
+            <h4 class="text-uppercase text-center"><img src="images/icons/book.png" alt="demo">Educación</h4>
+        </div>
+
+        <div id="div-educacion"></div>
+    </div>
+</section>
+
+
+<!--==========================================
+                   SKILLS
+===========================================-->
+<section id="skills" class="section">
+    <div class="container">
+        <!-- SECTION TITLE -->
+        <div class="section-title">
+            <h4 class="text-uppercase text-center"><img src="images/icons/mixer.png" alt="demo">Skills</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="skills-card" class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <!-- FIRST SKILL SECTION -->
+                                <div class="skills-title">
+                                    <h6 class="text-center">Idiomas</h6>
+                                </div>
+                                <!-- FIRST SKILL BAR -->
+                                <div id="div-idiomas"></div>
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-4 col-xs-12"></div>
+
+
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <!-- THIRD SKILL SECTION -->
+                                <div class="skills-title">
+                                    <h6 class="text-center">Skills</h6>
+                                </div>
+                                <!-- FIRST SKILL BAR -->
+                                <div id="div-skills"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--==========================================
+                   EXPERIENCE
+===========================================-->
+<section id="experience" class="section">
+    <div class="container">
+        <!-- SECTION TITLE -->
+        <div class="section-title">
+            <h4 class="text-uppercase text-center"><img src="images/icons/layers.png" alt="demo">Experiencia</h4>
+        </div>
+
+        <div id="div-experiencia"></div>
+    </div>
+</section>
+
+<!--==========================================
+                  MODALS
+===========================================-->
+
+<!--==========================================
+                  CONTACT
+===========================================-->
+<section id="contact" class="section">
+    <div class="container">
+        <!-- SECTION TITLE -->
+        <div class="section-title">
+            <h4 class="text-uppercase text-center"><img src="images/icons/envelope.png" alt="demo">Contacto</h4>
+        </div>
+        <div class="row">
+            <div id="contact-card" class="">
+                <!-- CONTACT FORM -->
+                <div class="card">
+                    <div class="card-content">
+                        <form id="contact-form" name="c-form">
+                            <!-- NAME -->
+                            <div class="input-field">
+                                <input id="first_name" type="text" class="validate" name="first_name" required>
+                                <label for="first_name">Nombre</label>
+                            </div>
+                            <!--SUBJECT-->
+                            <div class="input-field">
+                                <input id="sub" type="text" class="validate" name="sub">
+                                <label for="sub">Asunto</label>
+                            </div>
+                            <!--EMAIL-->
+                            <div class="input-field">
+                                <input id="email" type="email" class="validate" name="email" required>
+                                <label for="email">Correo</label>
+                            </div>
+                            <!--MESSAGE-->
+                            <div class="input-field">
+                                <textarea id="textarea1" class="materialize-textarea" name="message"
+                                          required></textarea>
+                                <label for="textarea1">Mensaje</label>
+                            </div>
+                            <!-- SEND BUTTON -->
+                            <div class="contact-send">
+                                <button id="submit" name="contactSubmit" type="submit" value="Submit"
+                                        class="btn waves-effect">Enviar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!--FORM LOADER-->
+                    <div id="form-loader" class="progress is-hidden">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!--==========================================
+                     SCROLL TO TOP
+===========================================-->
+<div id="scroll-top">
+    <div id="scrollup"><i class="fas fa-angle-up"></i></div>
+</div>
+
+<!--==========================================
+                      FOOTER
+===========================================-->
+
+<footer>
+    <div class="container">
+        <!--FOOTER DETAILS-->
+        <p class="text-center">
+            Diseñado por
+            <a href="databird.tech" target="_blank">
+                <strong>Databird</strong>
+            </a>
+        </p>
+    </div>
+</footer>
+
+
+<!--==========================================
+                  SCRIPTS
+===========================================-->
+<script src="javascript/vendors/jquery-2.1.3.min.js"></script>
+<script src="javascript/vendors/bootstrap.min.js"></script>
+<script src="javascript/vendors/materialize.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI14J_PNWVd-m0gnUBkjmhoQyNyd7nllA"></script>
+<script src="javascript/vendors/markerwithlabel.min.js"></script>
+<script src="javascript/vendors/retina.min.js"></script>
+<script src="javascript/vendors/scrollreveal.min.js"></script>
+<script src="javascript/vendors/swiper.jquery.min.js"></script>
+<script src="javascript/vendors/jquery.magnific-popup.min.js"></script>
+<script src="javascript/custom-dark.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+<script src="javascript/firebase.js" type="text/javascript"></script>
+<script src="javascript/index.js" type="text/javascript"></script>
+
+
+</body>
+</html>
