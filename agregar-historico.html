@@ -9,7 +9,7 @@
     <meta name="keywords" content="">
 
 
-    <title>Registro | Business Card</title>
+    <title>Agregar Histórico | Business Card</title>
     <link rel="icon" href="images/site/fav-icon.png">
 
     <!--APPLE TOUCH ICON-->
@@ -62,8 +62,8 @@
             </div>
             <!-- NAME & STATUS -->
             <div class="text-holder text-center">
-                <h2>Registro</h2>
-                <h6>Registrate para crear tu Tarjeta Electrónica gratuita</h6>
+                <h2>Añade</h2>
+                <h6>Agrega más datos a tu histórico</h6>
             </div>
         </div>
     </div>
@@ -81,8 +81,7 @@
     </nav>
 
     <!--HEADER BACKGROUND-->
-    <div class="header-background section"></div>
-
+    <div class="header-background section"><img id='div-bg' style="width: 100%; height: 100%"></div>
 </header>
 
 
@@ -92,140 +91,31 @@
 <div id="v-card-holder" class="section">
     <div class="container">
         <div class="row">
-
-
             <div class="col-md-5">
                 <!-- V-CARD -->
-                <div id="v-card" class="col-lg-3 card">
+                <div id="formulario-experiencia" class="card">
                     <div class="m-3">
-                        <form onsubmit="crearCuentaConCorreo(); return false;">
-                            <div class="form-group">
-                                <label for="input-email">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="input-email"
-                                       aria-describedby="emailHelp" placeholder="Correo">
-                                <small id="" class="form-text text-muted">Nunca lucraremos con esta información</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="input-password">Password</label>
-                                <input type="password" class="form-control" id="input-password" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Crear</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-5">
-                <!-- V-CARD -->
-                <div id="formulario-perfil" class="card" hidden>
-                    <div class="m-3">
-                        <form onsubmit="guardarImgDePerfil(); return false;">
-                            <div class="form-row">
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-valid" id="input-nombre"
-                                           placeholder="Nombre Completo" required>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="file" class="form-control is-valid" id="input-img"
-                                           placeholder="Selecciona una imagen" accept="image/*" required>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-email-perfil"
-                                           placeholder="Correo" aria-describedby="inputGroupPrepend3" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-4 mb-3">
-                                    <input type="tel" class="form-control is-invalid" id="input-cel"
-                                           placeholder="Número Celular" required>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-fb-personal"
-                                           placeholder="Facebook personal">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-twitter"
-                                           placeholder="Twitter">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-linkedin-personal"
-                                           placeholder="Linkedin personal">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-linkedin-ccorporativo"
-                                           placeholder="Linkedin coorporativo">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="tel" class="form-control is-invalid" id="input-pagina"
-                                           placeholder="Página coorporativa">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-facebook-coorporativo"
-                                           placeholder="Facebook coorporativo">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-whatsapp-coorporativo"
-                                           placeholder="Whatsapp coorporativo">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-estado"
-                                           placeholder="Estado">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="tel" class="form-control is-invalid" id="input-pais"
-                                           placeholder="Pais">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <input type="text" class="form-control is-invalid" id="input-expertise"
-                                           placeholder="Área de Expertise">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input is-invalid" type="checkbox" value=""
-                                           id="invalidCheck3" required>
-                                    <label class="form-check-label" for="invalidCheck3">Acepto los términos y condiciones</label>
-                                    <div class="invalid-feedback">
-                                        Debes de estar de acuerdo para poder crear tu tarjeta.
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" type="submit">Guardar Perfil</button>
-                            <img hidden id="img-loader" src="images/icons/small-loader.gif">
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <!-- V-CARD -->
-                <div id="formulario-experiencia" class="card" hidden>
-                    <div class="m-3">
-                        <form onsubmit="mostrarFormularioEducacion(); return false;">
+                        <form onsubmit="agregarExperiencia(); return false;">
                             Experiencia
                             <div class="form-group">
                                 <label for="input-puesto">Puesto</label>
                                 <input type="text" class="form-control" id="input-puesto"
-                                       aria-describedby="emailHelp" placeholder="">
+                                       required aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="input-empresa">Empresa</label>
                                 <input type="text" class="form-control" id="input-empresa"
-                                       aria-describedby="emailHelp" placeholder="">
+                                       required aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="input-fecha-inicio-puesto">Fecha de inicio</label>
-                                <input type="date" class="form-control" id="input-fecha-inicio-puesto">
+                                <input type="date" required 0class="form-control" id="input-fecha-inicio-puesto">
                             </div>
                             <div class="form-group">
                                 <label for="input-fecha-fin-puesto">Fecha de fin (deja vacío si sigues laraborando aquí)</label>
                                 <input type="date" class="form-control" id="input-fecha-fin-puesto">
                             </div>
-                            <button type="button" onclick="agregarExperiencia()" class="btn btn-primary">Agregar Experiencia</button>
-                            <button type="submit" class="btn btn-primary">Siguiente</button>
+                            <button type="submit" class="btn btn-primary">Agregar Experiencia</button>
                         </form>
                     </div>
                 </div>
@@ -233,9 +123,9 @@
 
             <div class="col-md-5">
                 <!-- V-CARD -->
-                <div id="formulario-educacion" class="card" hidden>
+                <div id="formulario-educacion" class="card">
                     <div class="m-3">
-                        <form onsubmit="mostrarFormularioIdiomas(); return false;">
+                        <form onsubmit="agregarEducacion(); return false;">
                             Educacion
                             <div class="form-group">
                                 <label for="input-titulo">Titulo</label>
@@ -245,72 +135,22 @@
                             <div class="form-group">
                                 <label for="input-instituto">Instituto</label>
                                 <input type="text" class="form-control" id="input-instituto"
-                                       aria-describedby="emailHelp" placeholder="">
+                                       required aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="input-fecha-inicio-educacion">Fecha de inicio</label>
-                                <input type="date" class="form-control" id="input-fecha-inicio-educacion">
+                                <input type="date" required class="form-control" id="input-fecha-inicio-educacion">
                             </div>
                             <div class="form-group">
                                 <label for="input-fecha-fin-educacion">Fecha de fin</label>
                                 <input type="date" class="form-control" id="input-fecha-fin-educacion">
                             </div>
-                            <button type="button" onclick="agregarEducacion()" class="btn btn-primary">Agregar Educación</button>
-                            <button type="submit" class="btn btn-primary">Siguiente</button>
+                            <button type="submit" class="btn btn-primary">Agregar Educación</button>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-5">
-                <!-- V-CARD -->
-                <div id="formulario-idioma" class="card" hidden>
-                    <div class="m-3">
-                        <form onsubmit="mostrarFormularioSkills(); return false;">
-                            Idiomas
-                            <div class="form-group">
-                                <label for="input-idioma">Idioma</label>
-                                <input type="text" class="form-control" id="input-idioma"
-                                       aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-porcentaje-idioma">Porcentaje</label>
-                                <input type="range" class="form-control" id="input-porcentaje-idioma"
-                                       aria-describedby="emailHelp" max="100" min="0" placeholder=""
-                                       oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
-                            </div>
-                            <button type="button" onclick="agregarIdioma()" class="btn btn-primary">Agregar Idioma</button>
-                            <button type="submit" class="btn btn-primary">Siguiente</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <!-- V-CARD -->
-                <div id="formulario-skills" class="card" hidden>
-                    <div class="m-3">
-                        <form>
-                            Skills
-                            <div class="form-group">
-                                <label for="input-skill">Skill</label>
-                                <input type="text" class="form-control" id="input-skill"
-                                       aria-describedby="emailHelp" placeholder="E.g Office, Photoshop">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-porcentaje-skill">Porcentaje</label>
-                                <input type="range" class="form-control" id="input-porcentaje-skill"
-                                       aria-describedby="emailHelp" max="100" min="0" placeholder=""
-                                       oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
-                            </div>
-                            <button type="button" onclick="agregarSkill()" class="btn btn-primary">Agregar Skill</button>
-                            <button type="button" onclick="window.location.href='index.html'" class="btn btn-primary">Terminar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

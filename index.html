@@ -44,10 +44,10 @@
 
     <!-- CUSTOM STYLE -->
     <link href="stylesheets/style_dark_dark.css" id="switch_style" rel="stylesheet">
+    <link href="stylesheets/mycss.css" rel="stylesheet">
 
 </head>
 <body>
-
 
 <!--==========================================
                   PRE-LOADER
@@ -73,6 +73,11 @@
 <header id="home">
     <nav id="theMenu" class="menu">
 
+        <div id="div-editar-bg">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+        </div>
         <!--MENU-->
         <div id="menu-options" class="menu-wrap">
 
@@ -88,6 +93,9 @@
             <a href="#skills"><i class="title-icon fas fa-sliders-h"></i>Skills</a>
             <a href="#experience"><i class="title-icon fas fa-suitcase"></i>Experiencia</a>
             <a href="#contact"><i class="title-icon fas fa-envelope"></i>Contacto</a>
+            <a hidden id="a-editar" href="editar.html"><i class="title-icon fas fa-cogs"></i>Editar</a>
+            <a hidden id="a-personalizar" href="editar.html"><i class="title-icon fas fa-pencil-alt"></i>Personalizar</a>
+
         </div>
 
         <!-- MENU BUTTON -->
@@ -101,7 +109,7 @@
     </nav>
 
     <!--HEADER BACKGROUND-->
-    <div class="header-background section"></div>
+    <div class="header-background section"><img id='div-bg' style="width: 100%; height: 100%"> </div>
 
 </header>
 
@@ -145,7 +153,7 @@
                             <ul id="ul-perfil" class="profile-list">
                                 <li class="clearfix">
                                     <span class="title"><i class="material-icons">phone</i></span>
-                                    <span id="span-cel" class="content"></span>
+                                    <span class="content"><a id="a-cel"></a></span>
                                 </li>
                                 <li class="clearfix">
                                     <span class="title"><i class="material-icons">place</i></span>
@@ -173,7 +181,7 @@
 <!--==========================================
                    EDUCATION
 ===========================================-->
-<section id="education" class="section">
+<section id="education" class="section section-m">
     <div class="container">
         <!-- SECTION TITLE -->
         <div class="section-title">
@@ -181,6 +189,10 @@
         </div>
 
         <div id="div-educacion"></div>
+        <div class="timeline-block">
+            <a href="agregar-historico.html"><div class="timeline-dot"><i class="fas fa-plus"></i></div></a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -188,11 +200,11 @@
 <!--==========================================
                    SKILLS
 ===========================================-->
-<section id="skills" class="section">
+<section id="skills" class="section section-m">
     <div class="container">
         <!-- SECTION TITLE -->
         <div class="section-title">
-            <h4 class="text-uppercase text-center"><img src="images/icons/mixer.png" alt="demo">Skills</h4>
+            <h4 class="text-uppercase text-center"><img src="images/icons/mixer.png" alt="demo">Skills <a hidden id="a-agregar-skills" href="agregar-skills.html">+</a></h4>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -232,7 +244,7 @@
 <!--==========================================
                    EXPERIENCE
 ===========================================-->
-<section id="experience" class="section">
+<section id="experience" class="section section-m">
     <div class="container">
         <!-- SECTION TITLE -->
         <div class="section-title">
@@ -240,6 +252,10 @@
         </div>
 
         <div id="div-experiencia"></div>
+        <div class="timeline-block">
+            <a href="agregar-historico.html"><div class="timeline-dot"><i class="fas fa-plus"></i></div></a>
+        </div>
+    </div>
     </div>
 </section>
 
@@ -250,7 +266,7 @@
 <!--==========================================
                   CONTACT
 ===========================================-->
-<section id="contact" class="section">
+<section id="contact" class="section section-m">
     <div class="container">
         <!-- SECTION TITLE -->
         <div class="section-title">

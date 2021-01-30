@@ -4,10 +4,11 @@ const idCandidato = urlParams.get('id');
 const ENLACE = 'https://whatevaaar.github.io/BusinessCards/index.html'
 
 let usuarioUID = null;
+let esPropia = false;
 
-window.onload = cargarDatosPorGet();
+window.onload = cargarParametroIDSiExiste();
 
-function cargarDatosPorGet(){
+function cargarParametroIDSiExiste(){
     if (idCandidato) {
         usuarioUID = idCandidato;
         cargarDatosDeUsuario();
@@ -18,6 +19,8 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (user && !idCandidato) {
         usuarioUID = user.uid;
         cargarDatosDeUsuario();
+        mostrarElementosDeEdicion();
+        esPropia = true;
     }
 });
 
@@ -28,6 +31,12 @@ const divExperiencia = document.getElementById('div-experiencia');
 const divEducacion = document.getElementById('div-educacion');
 const divSkills = document.getElementById('div-skills');
 const divIdiomas = document.getElementById('div-idiomas');
+
+function mostrarElementosDeEdicion(){
+    document.getElementById('a-editar').hidden = false;
+    document.getElementById('a-personalizar').hidden = false;
+    document.getElementById('a-agregar-skills').hidden = false;
+}
 
 function crearLiCorreo(email) {
     let liClearfix = document.createElement('li');
@@ -48,6 +57,7 @@ function crearLiCorreo(email) {
     spanContent.appendChild(aEnlace);
     ulPerfil.appendChild(liClearfix);
 }
+
 function crearLiCompartir() {
     let liClearfix = document.createElement('li');
     let spanTitle = document.createElement('span');
@@ -138,7 +148,7 @@ function crearBotonLinkedInCoorporativo(linkedinCoorporativo) {
 function crearBotonWhatsappCoorporativo(whatsappCoorporativo) {
     let enlace = document.createElement('a');
     let icono = document.createElement('i');
-    enlace.href = whatsappCoorporativo;
+    enlace.href = 'https://api.whatsapp.com/send?phone=' + whatsappCoorporativo
     enlace.classList.add('social');
     enlace.classList.add('btn-floating');
     enlace.classList.add('green');
@@ -149,6 +159,20 @@ function crearBotonWhatsappCoorporativo(whatsappCoorporativo) {
     redesCoorporativas.appendChild(enlace);
 }
 
+function crearBotonWhatsapp(numeroTelefonico) {
+    let enlace = document.createElement('a');
+    let icono = document.createElement('i');
+    enlace.href = 'https://api.whatsapp.com/send?phone=' + numeroTelefonico
+    enlace.classList.add('social');
+    enlace.classList.add('btn-floating');
+    enlace.classList.add('green');
+    enlace.classList.add('darken-3');
+    icono.classList.add('fab');
+    icono.classList.add('fa-whatsapp');
+    enlace.appendChild(icono);
+    redesPersonales.appendChild(enlace);
+}
+
 function escribirDatosGenerales(usuario){
     document.title = 'Business Card de ' + usuario.nombre;
     document.getElementById('h-carga-nombre').innerText = usuario.nombre;
@@ -156,11 +180,12 @@ function escribirDatosGenerales(usuario){
     document.getElementById('h-nombre-intro').innerText = usuario.nombre;
     document.getElementById('h-expertise-intro').innerText = usuario.expertise;
     document.getElementById('img-perfil').src = usuario.imgPerfil;
-    document.getElementById('span-cel').innerText = usuario.numeroTelefonico;
-    document.getElementById('span-cel').innerText = usuario.numeroTelefonico;
+    document.getElementById('a-cel').innerText = usuario.numeroTelefonico;
+    document.getElementById('a-cel').href = 'tel:' + usuario.numeroTelefonico;
     document.getElementById('span-ubicacion').innerText = usuario.estado + ', ' + usuario.pais;
     crearLiCorreo(usuario.email);
     crearLiCompartir();
+    crearBotonWhatsapp(usuario.numeroTelefonico);
     if (usuario.pagina !== '')
         crearLiPagina(usuario.pagina);
     if (usuario.facebook !== '')
@@ -182,7 +207,7 @@ function crearLiPagina(enlace){
     let spanTitle = document.createElement('span');
     let spanContent = document.createElement('span');
     let aEnlace = document.createElement('a');
-    let icono = document.createElement('span');
+    let icono = document.createElement('i');
     liClearfix.classList.add('clearfix');
     spanTitle.classList.add('title');
     icono.classList.add('fas');
@@ -197,20 +222,7 @@ function crearLiPagina(enlace){
     ulPerfil.appendChild(liClearfix);
 }
 
-function cargarDatosExperiencia() {
-    let query = firebase.database().ref("usuarios/" + usuarioUID + "/experiencia");
-    query.on("value", function (snapshot) {
-        if (snapshot.empty)
-            return;
-        snapshot.forEach(function (childSnapshot) {
-            let childData = childSnapshot.val();
-           crearApartadoExperiencia(childData);
-        });
-    }, function (error) {
-    });
-}
-
-function crearApartadoEducacion(childData) {
+function crearApartadoEducacion(childData, key) {
     let divTimelineBlock = document.createElement('div');
     let divTimelineDot = document.createElement('div');
     let hDot = document.createElement('h6');
@@ -222,6 +234,15 @@ function crearApartadoEducacion(childData) {
     let hFechas = document.createElement('h6');
     let smallInstituto = document.createElement('small');
     let smallFechas = document.createElement('small');
+    let iEliminar = document.createElement('i');
+    let aEliminar = document.createElement('a');
+    aEliminar.hidden = !esPropia;
+    aEliminar.addEventListener("click", function() {
+        eliminarEducacion(key);
+    }, false);
+    iEliminar.classList.add('fas');
+    iEliminar.classList.add('fa-times');
+    aEliminar.appendChild(iEliminar);
     divTimelineBlock.classList.add('timeline-block');
     divTimelineBlock.appendChild(divTimelineDot);
     divTimelineBlock.appendChild(divCard);
@@ -234,6 +255,7 @@ function crearApartadoEducacion(childData) {
     divCardContent.classList.add('card-content');
     divCardContent.appendChild(hTitle);
     divCardContent.appendChild(divInfo);
+    divCardContent.appendChild(aEliminar);
     hTitle.classList.add('timeline-title');
     hTitle.innerText = childData.titulo;
     divInfo.classList.add('timeline-info');
@@ -245,56 +267,48 @@ function crearApartadoEducacion(childData) {
     smallFechas.innerText = childData.fechaInicio + ' - ' + childData.fechaFin;
     divEducacion.appendChild(divTimelineBlock);
 }
-function crearApartadoExperiencia(childData) {
-    let divTimelineBlock = document.createElement('div');
-    let divTimelineDot = document.createElement('div');
-    let hDot = document.createElement('h6');
-    let divCard= document.createElement('div');
-    let divCardContent = document.createElement('div');
-    let hTitle = document.createElement('h6');
-    let divInfo = document.createElement('div');
-    let hInstituto = document.createElement('h6');
-    let hFechas = document.createElement('h6');
-    let smallInstituto = document.createElement('small');
-    let smallFechas = document.createElement('small');
-    divTimelineBlock.classList.add('timeline-block');
-    divTimelineBlock.appendChild(divTimelineDot);
-    divTimelineBlock.appendChild(divCard);
-    divTimelineDot.classList.add('timeline-dot');
-    hDot.innerText = childData.puesto.slice(0,1);
-    divTimelineDot.appendChild(hDot);
-    divCard.classList.add('card');
-    divCard.classList.add('timeline-content');
-    divCard.appendChild(divCardContent);
-    divCardContent.classList.add('card-content');
-    divCardContent.appendChild(hTitle);
-    divCardContent.appendChild(divInfo);
-    hTitle.classList.add('timeline-title');
-    hTitle.innerText = childData.puesto;
-    divInfo.classList.add('timeline-info');
-    divInfo.appendChild(hInstituto);
-    divInfo.appendChild(hFechas);
-    hInstituto.appendChild(smallInstituto);
-    hFechas.appendChild(smallFechas);
-    smallInstituto.innerText = childData.empresa;
-    smallFechas.innerText = childData.fechaInicio + ' - ' + childData.fechaFin;
-    divExperiencia.appendChild(divTimelineBlock);
-}
 
-function cargarDatosEducacion() {
-    let query = firebase.database().ref("usuarios/" + usuarioUID + "/educacion");
-    query.on("value", function (snapshot) {
-        if (snapshot.empty)
-            return;
-        snapshot.forEach(function (childSnapshot) {
-            let childData = childSnapshot.val();
-            crearApartadoEducacion(childData);
+function eliminarExperiencia(key) {
+    let refString = 'usuarios/' + usuarioUID + '/experiencia/' + key;
+    firebase.database().ref(refString).remove().then(function() {
+        document.location.reload()
+    })
+        .catch(function(error) {
+            alert('Error! Intenta de nuevo', error);
         });
-    }, function (error) {
-    });
 }
 
-function crearApartadoSkills(childData) {
+function eliminarSkill(key) {
+    let refString = 'usuarios/' + usuarioUID + '/skills/' + key;
+    firebase.database().ref(refString).remove().then(function() {
+        document.location.reload()
+    })
+        .catch(function(error) {
+            alert('Error! Intenta de nuevo', error);
+        });
+}
+
+function eliminarIdioma(key) {
+    let refString = 'usuarios/' + usuarioUID + '/idiomas/' + key;
+    firebase.database().ref(refString).remove().then(function() {
+        document.location.reload()
+    })
+        .catch(function(error) {
+            alert('Error! Intenta de nuevo', error);
+        });
+}
+
+function eliminarEducacion(key) {
+    let refString = 'usuarios/' + usuarioUID + '/educacion/' + key;
+    firebase.database().ref(refString).remove().then(function() {
+        document.location.reload()
+    })
+        .catch(function(error) {
+            alert('Error! Intenta de nuevo', error);
+        });
+}
+
+function crearApartadoSkills(childData,key) {
     let divSkillbar = document.createElement('div');
     divSkillbar.classList.add('skillbar');
     divSkillbar.dataset.percent = childData.porcentaje + '%';
@@ -303,6 +317,16 @@ function crearApartadoSkills(childData) {
     let spanSkillbarTitle = document.createElement('span');
     spanSkillbarTitle.innerText = childData.skill;
     divSkillbarTitle.appendChild(spanSkillbarTitle);
+    let aIcono = document.createElement('a');
+    aIcono.addEventListener("click", function() {
+        eliminarSkill(key);
+    }, false);
+    spanSkillbarTitle.appendChild(aIcono);
+    let iBasura = document.createElement('i');
+    iBasura.classList.add('far');
+    iBasura.classList.add('fa-trash-alt');
+    iBasura.style.color = 'black';
+    aIcono.appendChild(iBasura);
     let divSkillbarBar = document.createElement('div');
     divSkillbarBar.classList.add('skillbar-bar');
     divSkillbarBar.style.width = childData.porcentaje + '%';
@@ -315,20 +339,7 @@ function crearApartadoSkills(childData) {
     divSkills.appendChild(divSkillbar);
 }
 
-function cargarDatosSkills() {
-    let query = firebase.database().ref("usuarios/" + usuarioUID + "/skills");
-    query.on("value", function (snapshot) {
-        if (snapshot.empty)
-            return;
-        snapshot.forEach(function (childSnapshot) {
-            let childData = childSnapshot.val();
-            crearApartadoSkills(childData);
-        });
-    }, function (error) {
-    });
-}
-
-function crearApartadoIdiomas(childData) {
+function crearApartadoIdiomas(childData, key) {
     let divSkillbar = document.createElement('div');
     divSkillbar.classList.add('skillbar');
     divSkillbar.dataset.percent = childData.porcentaje + '%';
@@ -337,6 +348,16 @@ function crearApartadoIdiomas(childData) {
     let spanSkillbarTitle = document.createElement('span');
     spanSkillbarTitle.innerText = childData.idioma;
     divSkillbarTitle.appendChild(spanSkillbarTitle);
+    let aIcono = document.createElement('a');
+    aIcono.addEventListener("click", function() {
+        eliminarIdioma(key);
+    }, false);
+    spanSkillbarTitle.appendChild(aIcono);
+    let iBasura = document.createElement('i');
+    iBasura.classList.add('far');
+    iBasura.classList.add('fa-trash-alt');
+    iBasura.style.color = 'black';
+    aIcono.appendChild(iBasura);
     let divSkillbarBar = document.createElement('div');
     divSkillbarBar.classList.add('skillbar-bar');
     divSkillbarBar.style.width = childData.porcentaje + '%';
@@ -349,6 +370,92 @@ function crearApartadoIdiomas(childData) {
     divIdiomas.appendChild(divSkillbar);
 }
 
+function crearApartadoExperiencia(childData, key) {
+    let divTimelineBlock = document.createElement('div');
+    let divTimelineDot = document.createElement('div');
+    let hDot = document.createElement('h6');
+    let divCard= document.createElement('div');
+    let divCardContent = document.createElement('div');
+    let hTitle = document.createElement('h6');
+    let divInfo = document.createElement('div');
+    let hInstituto = document.createElement('h6');
+    let hFechas = document.createElement('h6');
+    let smallInstituto = document.createElement('small');
+    let smallFechas = document.createElement('small');
+    let iEliminar = document.createElement('i');
+    let aEliminar = document.createElement('a');
+    aEliminar.hidden = !esPropia;
+    aEliminar.addEventListener("click", function() {
+        eliminarExperiencia(key);
+    }, false);
+    iEliminar.classList.add('fas');
+    iEliminar.classList.add('fa-times');
+    aEliminar.appendChild(iEliminar);
+    divTimelineBlock.classList.add('timeline-block');
+    divTimelineBlock.appendChild(divTimelineDot);
+    divTimelineBlock.appendChild(divCard);
+    divTimelineDot.classList.add('timeline-dot');
+    hDot.innerText = childData.puesto.slice(0,1);
+    divTimelineDot.appendChild(hDot);
+    divCard.classList.add('card');
+    divCard.classList.add('timeline-content');
+    divCard.appendChild(divCardContent);
+    divCardContent.classList.add('card-content');
+    divCardContent.appendChild(hTitle);
+    divCardContent.appendChild(divInfo);
+    divCardContent.appendChild(aEliminar);
+    hTitle.classList.add('timeline-title');
+    hTitle.innerText = childData.puesto;
+    divInfo.classList.add('timeline-info');
+    divInfo.appendChild(hInstituto);
+    divInfo.appendChild(hFechas);
+    hInstituto.appendChild(smallInstituto);
+    hFechas.appendChild(smallFechas);
+    smallInstituto.innerText = childData.empresa;
+    smallFechas.innerText = childData.fechaInicio + ' - ' + childData.fechaFin;
+    divExperiencia.appendChild(divTimelineBlock);
+}
+
+
+function cargarDatosExperiencia() {
+    let query = firebase.database().ref("usuarios/" + usuarioUID + "/experiencia");
+    query.on("value", function (snapshot) {
+        if (snapshot.empty)
+            return;
+        snapshot.forEach(function (childSnapshot) {
+            let childData = childSnapshot.val();
+            crearApartadoExperiencia(childData, childSnapshot.key);
+        });
+    }, function (error) {
+    });
+}
+
+function cargarDatosEducacion() {
+    let query = firebase.database().ref("usuarios/" + usuarioUID + "/educacion");
+    query.on("value", function (snapshot) {
+        if (snapshot.empty)
+            return;
+        snapshot.forEach(function (childSnapshot) {
+            let childData = childSnapshot.val();
+            crearApartadoEducacion(childData, childSnapshot.key);
+        });
+    }, function (error) {
+    });
+}
+
+function cargarDatosSkills() {
+    let query = firebase.database().ref("usuarios/" + usuarioUID + "/skills");
+    query.on("value", function (snapshot) {
+        if (snapshot.empty)
+            return;
+        snapshot.forEach(function (childSnapshot) {
+            let childData = childSnapshot.val();
+            crearApartadoSkills(childData, childSnapshot.key);
+        });
+    }, function (error) {
+    });
+}
+
 function cargarDatosIdiomas() {
     let query = firebase.database().ref("usuarios/" + usuarioUID + "/idiomas");
     query.on("value", function (snapshot) {
@@ -356,11 +463,12 @@ function cargarDatosIdiomas() {
             return;
         snapshot.forEach(function (childSnapshot) {
             let childData = childSnapshot.val();
-            crearApartadoIdiomas(childData);
+            crearApartadoIdiomas(childData, childSnapshot.key);
         });
     }, function (error) {
     });
 }
+
 function cargarDatosGenerales() {
     let query = firebase.database().ref("usuarios/" + usuarioUID);
     query.once('value').then((snapshot) => {
@@ -375,3 +483,4 @@ function cargarDatosDeUsuario() {
     cargarDatosSkills();
     cargarDatosIdiomas();
 }
+

@@ -1,14 +1,18 @@
+const imgLoader = document.getElementById('img-loader');
+
 function crearCuentaConCorreo() {
     let email = document.getElementById("input-email").value;
     let password = document.getElementById("input-password").value;
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => {
             mostrarFormularioPerfil();
+            enviarCorreoDeConfirmacion(email);
         })
         .catch((error) => {
             alert(error);
         });
 }
+
 function mostrarFormularioPerfil(){
     document.getElementById('v-card').hidden = true;
     document.getElementById('formulario-perfil').hidden = false;
@@ -18,10 +22,12 @@ function mostrarFormularioExperiencia(){
     document.getElementById('formulario-perfil').hidden = true;
     document.getElementById('formulario-experiencia').hidden = false;
 }
+
 function mostrarFormularioEducacion(){
     document.getElementById('formulario-experiencia').hidden = true;
     document.getElementById('formulario-educacion').hidden = false;
 }
+
 function mostrarFormularioIdiomas(){
     document.getElementById('formulario-educacion').hidden = true;
     document.getElementById('formulario-idioma').hidden = false;
@@ -31,10 +37,11 @@ function mostrarFormularioSkills(){
     document.getElementById('formulario-idioma').hidden = true;
     document.getElementById('formulario-skills').hidden = false;
 }
+
 function guardarPerfil(urlImgPerfil){
     let user = firebase.auth().currentUser;
     let nombre = document.getElementById("input-nombre").value;
-    let email = document.getElementById("input-email").value;
+    let email = document.getElementById("input-email-perfil").value;
     let numeroTelefonico = document.getElementById("input-cel").value;
     let facebook = document.getElementById("input-fb-personal").value;
     let twitter = document.getElementById("input-twitter").value;
@@ -67,7 +74,7 @@ function guardarPerfil(urlImgPerfil){
             alert(error);
         } else {
             firebase.auth().currentUser.updateProfile({
-                displayName: nombre,
+                displayName: nombre.value,
                 photoURL: urlImgPerfil
             }).then(function () {
                 mostrarFormularioExperiencia();
@@ -79,9 +86,11 @@ function guardarPerfil(urlImgPerfil){
         }
     });
 }
+
 function guardarImgDePerfil() {
     let storageRef = firebase.storage().ref('imagenes_de_perfil/' + user.uid);
     let uploadTask = storageRef.put($('#input-img').prop('files')[0]);
+    imgLoader.hidden = false;
     uploadTask.on('state_changed', function (snapshot) {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -98,13 +107,16 @@ function guardarImgDePerfil() {
     }, function (error) {
         // Handle unsuccessful uploads
         alert("Error, intenta de nuevo");
+        imgLoader.hidden = true;
     }, function () {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
             guardarPerfil(downloadURL)
+            imgLoader.hidden = true;
         });
     });
 
 }
+
 function agregarExperiencia() {
     let puesto = document.getElementById("input-puesto").value;
     let fechaInicio = document.getElementById("input-fecha-inicio-puesto").value;
@@ -125,6 +137,7 @@ function agregarExperiencia() {
     });
     limpiarApartadoExperiencia();
 }
+
 function agregarEducacion() {
     let titulo = document.getElementById("input-titulo").value;
     let fechaInicio = document.getElementById("input-fecha-inicio-educacion").value;
@@ -145,6 +158,7 @@ function agregarEducacion() {
     });
     limpiarApartadoEducacion();
 }
+
 function agregarSkill() {
     let skill = document.getElementById("input-skill").value;
     let porcentaje = document.getElementById("input-porcentaje-skill").value;
@@ -178,6 +192,7 @@ function agregarIdioma() {
     });
     limpiarApartadoIdiomas();
 }
+
 function limpiarApartadoExperiencia() {
     document.getElementById("input-puesto").value = "";
     document.getElementById("input-fecha-fin-puesto").value = "";
@@ -195,6 +210,7 @@ function limpiarApartadoSkill() {
     document.getElementById("input-porcentaje-skill").value = "";
     document.getElementById("input-skill").value = "";
 }
+
 function limpiarApartadoIdiomas() {
     document.getElementById("input-porcentaje-idioma").value = "";
     document.getElementById("input-idioma").value = "";

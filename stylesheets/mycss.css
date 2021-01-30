@@ -1,0 +1,14 @@
+#img-loader{
+    max-width: 1rem;
+}
+
+#div-editar-bg{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+.section-m{
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+}
