@@ -482,7 +482,10 @@ function cargarDatosIdiomas() {
         });
     }, function (error) {
     });
-    cargarPreferencias();
+    if (idCandidato)
+        cargarPreferenciasDeUsuario(idCandidato);
+    else
+       cargarPreferencias();
 }
 
 function cargarDatosGenerales() {
