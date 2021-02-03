@@ -2,6 +2,13 @@ const divTabla = document.getElementById('div-tabla');
 
 window.onload = cargarDatos();
 
+firebase.auth().onAuthStateChanged(function (userL) {
+    if (userL) {
+        cargarPreferencias();
+        fadeoutLoader();
+    }
+});
+
 function eliminarUsuario(key) {
     let refString = 'usuarios/' + key;
     firebase.database().ref(refString).remove().then(function () {

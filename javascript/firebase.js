@@ -12,6 +12,13 @@ var firebaseConfig = {
     measurementId: "G-KZXQMKKFTW"
 };
 
+var CORREOS_ADMIN = ['andres@cahum.net', 'at.macias@cahum.net']
+
+function esAdmin(correo){
+    return CORREOS_ADMIN.indexOf(correo) >= 0;
+}
+
+
 var actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // URL must be in the authorized domains list in the Firebase Console.

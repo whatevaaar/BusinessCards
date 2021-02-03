@@ -33,15 +33,6 @@ const divEducacion = document.getElementById('div-educacion');
 const divSkills = document.getElementById('div-skills');
 const divIdiomas = document.getElementById('div-idiomas');
 
-function conseguirQR(){
-    const request = new Request('https://example.com', {method: 'POST', body: '{"foo": "bar"}'});
-    const url = request.url;
-    const method = request.method;
-    const credentials = request.credentials;
-    const bodyUsed = request.bodyUsed;
-
-}
-
 function mostrarElementosDeEdicion(){
     document.getElementById('a-editar').hidden = false;
     document.getElementById('a-personalizar').hidden = false;
@@ -70,25 +61,6 @@ function crearLiCorreo(email) {
     ulPerfil.appendChild(liClearfix);
 }
 
-function crearLiCompartir() {
-    let liClearfix = document.createElement('li');
-    let spanTitle = document.createElement('span');
-    let spanContent = document.createElement('span');
-    let aEnlace = document.createElement('a');
-    let icono = document.createElement('i');
-    liClearfix.classList.add('clearfix');
-    spanTitle.classList.add('title');
-    icono.classList.add('fas');
-    icono.classList.add('fa-share-alt');
-    spanContent.classList.add('content');
-    aEnlace.href = ENLACE + '?id=' + usuarioUID;
-    aEnlace.innerText = 'Compartir';
-    liClearfix.appendChild(spanTitle);
-    spanTitle.appendChild(icono);
-    liClearfix.appendChild(spanContent);
-    spanContent.appendChild(aEnlace);
-    ulPerfil.appendChild(liClearfix);
-}
 
 function crearBotonFacebook(facebook) {
     let enlace = document.createElement('a');
@@ -185,6 +157,19 @@ function crearBotonWhatsapp(numeroTelefonico) {
     redesPersonales.appendChild(enlace);
 }
 
+function crearListenersCompartir(uid) {
+    let textArea = document.getElementById('textarea-compartir').value;
+    document.getElementById('a-compartir-facebook').addEventListener("click", function() {
+        redireccionar('https://www.facebook.com/sharer/sharer.php?u=' + ENLACE + '?id=' + uid);
+    }, false);
+    document.getElementById('a-compartir-linkedin').addEventListener("click", function() {
+        redireccionar('https://www.linkedin.com/shareArticle?mini=true&url=' + ENLACE + '?id=' + uid + '&title=&summary=' + textArea);
+    }, false);
+    document.getElementById('a-compartir-twitter').addEventListener("click", function() {
+        redireccionar('https://twitter.com/intent/tweet?url=' + ENLACE + '?id=' + uid + '&text=' + textArea);
+    }, false);
+}
+
 function escribirDatosGenerales(usuario){
     document.title = 'Business Card de ' + usuario.nombre;
     document.getElementById('h-carga-nombre').innerText = usuario.nombre;
@@ -194,9 +179,10 @@ function escribirDatosGenerales(usuario){
     document.getElementById('img-perfil').src = usuario.imgPerfil;
     document.getElementById('a-cel').innerText = usuario.numeroTelefonico;
     document.getElementById('a-cel').href = 'tel:' + usuario.numeroTelefonico;
+    document.getElementById('a-admin').hidden = esAdmin(usuario.correo);
     document.getElementById('span-ubicacion').innerText = usuario.estado + ', ' + usuario.pais;
     crearLiCorreo(usuario.email);
-    crearLiCompartir();
+    crearListenersCompartir(usuario.uid);
     crearBotonWhatsapp(usuario.numeroTelefonico);
     if (usuario.pagina !== '')
         crearLiPagina(usuario.pagina);
@@ -327,7 +313,7 @@ function crearApartadoSkills(childData,key) {
     let divSkillbarTitle = document.createElement('div');
     divSkillbarTitle.classList.add('skillbar-title');
     let spanSkillbarTitle = document.createElement('span');
-    spanSkillbarTitle.innerText = childData.skill;
+    spanSkillbarTitle.innerText = childData.skill + ' ';
     divSkillbarTitle.appendChild(spanSkillbarTitle);
     let aIcono = document.createElement('a');
     aIcono.addEventListener("click", function() {
@@ -335,10 +321,11 @@ function crearApartadoSkills(childData,key) {
     }, false);
     spanSkillbarTitle.appendChild(aIcono);
     let iBasura = document.createElement('i');
-    iBasura.classList.add('far');
-    iBasura.classList.add('fa-trash-alt');
+    iBasura.classList.add('fas');
+    iBasura.classList.add('fa-times');
     iBasura.style.color = 'black';
     aIcono.appendChild(iBasura);
+    aIcono.hidden = !esPropia;
     let divSkillbarBar = document.createElement('div');
     divSkillbarBar.classList.add('skillbar-bar');
     divSkillbarBar.style.width = childData.porcentaje + '%';
@@ -358,7 +345,7 @@ function crearApartadoIdiomas(childData, key) {
     let divSkillbarTitle = document.createElement('div');
     divSkillbarTitle.classList.add('skillbar-title');
     let spanSkillbarTitle = document.createElement('span');
-    spanSkillbarTitle.innerText = childData.idioma;
+    spanSkillbarTitle.innerText = childData.idioma + ' ';
     divSkillbarTitle.appendChild(spanSkillbarTitle);
     let aIcono = document.createElement('a');
     aIcono.addEventListener("click", function() {
@@ -366,10 +353,11 @@ function crearApartadoIdiomas(childData, key) {
     }, false);
     spanSkillbarTitle.appendChild(aIcono);
     let iBasura = document.createElement('i');
-    iBasura.classList.add('far');
-    iBasura.classList.add('fa-trash-alt');
+    iBasura.classList.add('fas');
+    iBasura.classList.add('fa-times');
     iBasura.style.color = 'black';
     aIcono.appendChild(iBasura);
+    aIcono.hidden = !esPropia;
     let divSkillbarBar = document.createElement('div');
     divSkillbarBar.classList.add('skillbar-bar');
     divSkillbarBar.style.width = childData.porcentaje + '%';
@@ -401,7 +389,7 @@ function crearApartadoExperiencia(childData, key) {
         eliminarExperiencia(key);
     }, false);
     iEliminar.classList.add('fas');
-    iEliminar.classList.add('fa-times');
+    iEliminar.classList.add('fa-trash-alt');
     aEliminar.appendChild(iEliminar);
     divTimelineBlock.classList.add('timeline-block');
     divTimelineBlock.appendChild(divTimelineDot);
@@ -503,3 +491,7 @@ function cargarDatosDeUsuario() {
     cargarDatosIdiomas();
 }
 
+function redireccionar(url) {
+    var win = window.open(url, '_blank');
+    win.focus();
+}

@@ -17,7 +17,12 @@ const expertise = document.getElementById("input-expertise");
 firebase.auth().onAuthStateChanged(function (user) {
     if (user){
         usuarioUID = user.uid;
+        cargarPreferencias();
         cargarDatosGenerales();
+        fadeoutLoader();
+    }
+    else{
+        window.location.href = 'registrar.html'
     }
 });
 

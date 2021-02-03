@@ -89,6 +89,7 @@
             <a href="#contact"><i class="title-icon fas fa-envelope"></i>Contacto</a>
             <a hidden id="a-editar" href="editar.html"><i class="title-icon fas fa-cogs"></i>Editar</a>
             <a hidden id="a-personalizar" href="personalizar.html"><i class="title-icon fas fa-pencil-alt"></i>Personalizar</a>
+            <a hidden id="a-admin" href="admin.html"><i class="title-icon fas fa-pencil-alt"></i>Admin</a>
 
         </div>
 
@@ -152,6 +153,12 @@
                                 <li class="clearfix">
                                     <span class="title"><i class="material-icons">place</i></span>
                                     <span class="content" id="span-ubicacion"></span>
+                                </li>
+                                <li class="clearfix">
+                                    <a href="#modalSkills" data-toggle="modal" data-target="#modalCompartir">
+                                    <span class="title"><i class="fas fa-share-alt"></i></span>
+                                    <span class="content">Compartir</span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -351,6 +358,32 @@
                       MOODALS
 ===========================================-->
 
+<div class="modal fade" id="modalCompartir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModa">Compartir</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <textarea id="textarea-compartir" name="w3review" rows="2" cols="50">
+                    ¡Mira el Business Card de CAHUM!
+                </textarea>
+            </div>
+            <div class="modal-footer">
+                <a id="a-compartir-facebook" class="social btn-floating indigo"><i class="fab fa-facebook-f"></i></a>
+                <a id="a-compartir-linkedin" class="social btn-floating blue darken-3"><i class="fab fa-linkedin-in"></i></a>
+                <a id="a-compartir-twitter" class="social btn-floating blue"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalEducacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -383,7 +416,7 @@
                         <label for="input-fecha-fin-educacion">Fecha de fin</label>
                         <input type="date" class="form-control" id="input-fecha-fin-educacion">
                     </div>
-               </form>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="agregarEducacion()" class="btn btn-warning">Guardar Cambios</button>
