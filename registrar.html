@@ -108,7 +108,7 @@
                                 <label for="input-password">Password</label>
                                 <input type="password" class="form-control" id="input-password" placeholder="Password">
                             </div>
-                            <button type="submit" class="btn btn-primary">Crear</button>
+                            <button type="submit" class="btn btn-primary btn-cahum">Crear</button>
                         </form>
                     </div>
                 </div>
@@ -199,117 +199,6 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
-                <!-- V-CARD -->
-                <div id="formulario-experiencia" class="card" hidden>
-                    <div class="m-3">
-                        <form onsubmit="mostrarFormularioEducacion(); return false;">
-                            Experiencia
-                            <div class="form-group">
-                                <label for="input-puesto">Puesto</label>
-                                <input type="text" class="form-control" id="input-puesto"
-                                       required aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-empresa">Empresa</label>
-                                <input type="text" class="form-control" id="input-empresa"
-                                       required aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-fecha-inicio-puesto">Fecha de inicio</label>
-                                <input type="date" required class="form-control" id="input-fecha-inicio-puesto">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-fecha-fin-puesto">Fecha de fin (deja vacío si sigues laraborando aquí)</label>
-                                <input type="date" class="form-control" id="input-fecha-fin-puesto">
-                            </div>
-                            <button type="button" onclick="agregarExperiencia()" class="btn btn-primary">Agregar Experiencia</button>
-                            <button type="submit" class="btn btn-primary">Siguiente</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <!-- V-CARD -->
-                <div id="formulario-educacion" class="card" hidden>
-                    <div class="m-3">
-                        <form onsubmit="mostrarFormularioIdiomas(); return false;">
-                            Educacion
-                            <div class="form-group">
-                                <label for="input-titulo">Titulo</label>
-                                <input type="text" class="form-control" id="input-titulo"
-                                       required aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-instituto">Instituto</label>
-                                <input type="text" class="form-control" id="input-instituto"
-                                       required aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-fecha-inicio-educacion">Fecha de inicio</label>
-                                <input type="date" required class="form-control" id="input-fecha-inicio-educacion">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-fecha-fin-educacion">Fecha de fin</label>
-                                <input type="date" class="form-control" id="input-fecha-fin-educacion">
-                            </div>
-                            <button type="button" onclick="agregarEducacion()" class="btn btn-primary">Agregar Educación</button>
-                            <button type="submit" class="btn btn-primary">Siguiente</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <!-- V-CARD -->
-                <div id="formulario-idioma" class="card" hidden>
-                    <div class="m-3">
-                        <form onsubmit="mostrarFormularioSkills(); return false;">
-                            Idiomas
-                            <div class="form-group">
-                                <label for="input-idioma">Idioma</label>
-                                <input type="text" class="form-control" id="input-idioma"
-                                       required aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-porcentaje-idioma">Porcentaje</label>
-                                <input type="range" class="form-control" id="input-porcentaje-idioma"
-                                       required aria-describedby="emailHelp" max="100" min="0" placeholder=""
-                                       oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
-                            </div>
-                            <button type="button" onclick="agregarIdioma()" class="btn btn-primary">Agregar Idioma</button>
-                            <button type="submit" class="btn btn-primary">Siguiente</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <!-- V-CARD -->
-                <div id="formulario-skills" class="card" hidden>
-                    <div class="m-3">
-                        <form>
-                            Skills
-                            <div class="form-group">
-                                <label for="input-skill">Skill</label>
-                                <input type="text" class="form-control" id="input-skill"
-                                      required aria-describedby="emailHelp" placeholder="E.g Office, Photoshop">
-                            </div>
-                            <div class="form-group">
-                                <label for="input-porcentaje-skill">Porcentaje</label>
-                                <input type="range" class="form-control" id="input-porcentaje-skill"
-                                       required aria-describedby="emailHelp" max="100" min="0" placeholder=""
-                                       oninput="this.nextElementSibling.value = this.value">
-                                <output></output>
-                            </div>
-                            <button type="button" onclick="agregarSkill()" class="btn btn-primary">Agregar Skill</button>
-                            <button type="button" onclick="window.location.href='index.html'" class="btn btn-primary">Terminar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

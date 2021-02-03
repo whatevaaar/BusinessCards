@@ -18,26 +18,6 @@ function mostrarFormularioPerfil(){
     document.getElementById('formulario-perfil').hidden = false;
 }
 
-function mostrarFormularioExperiencia(){
-    document.getElementById('formulario-perfil').hidden = true;
-    document.getElementById('formulario-experiencia').hidden = false;
-}
-
-function mostrarFormularioEducacion(){
-    document.getElementById('formulario-experiencia').hidden = true;
-    document.getElementById('formulario-educacion').hidden = false;
-}
-
-function mostrarFormularioIdiomas(){
-    document.getElementById('formulario-educacion').hidden = true;
-    document.getElementById('formulario-idioma').hidden = false;
-}
-
-function mostrarFormularioSkills(){
-    document.getElementById('formulario-idioma').hidden = true;
-    document.getElementById('formulario-skills').hidden = false;
-}
-
 function guardarPerfil(urlImgPerfil){
     let user = firebase.auth().currentUser;
     let nombre = document.getElementById("input-nombre").value;
@@ -77,7 +57,7 @@ function guardarPerfil(urlImgPerfil){
                 displayName: nombre.value,
                 photoURL: urlImgPerfil
             }).then(function () {
-                mostrarFormularioExperiencia();
+                window.location.href = 'index.html';
                 // Update successful.
             }).catch(function (error) {
                 alert(error);

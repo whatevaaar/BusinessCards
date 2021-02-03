@@ -6,6 +6,7 @@ let usuarioUID;
 firebase.auth().onAuthStateChanged(function (user) {
     if (user){
         usuarioUID = user.uid;
+        cargarPreferencias();
         cargarDatosPreferencias();
     }
 });
@@ -26,16 +27,21 @@ function cargarDatosPreferencias() {
             return;
         let preferencia = snapshot.val();
         iniciarJsColor(preferencia.colorPrimario);
-        crearApartadoExperiencia(childData, childSnapshot.key);
     }, function (error) {
     });
 }
 
 function guardarPreferencias(urlImgBg) {
-    firebase.database().ref('preferencias/' + usuarioUID).update({
-        imgBg: urlImgBg,
-        colorPrimario: colorPrimario.value
-    }, (error) => {
+    if (urlImgBg)
+        updates = {
+            imgBg: urlImgBg,
+            colorPrimario: colorPrimario.value
+        }
+    else
+        updates = {
+            colorPrimario: colorPrimario.value
+        }
+    firebase.database().ref('preferencias/' + usuarioUID).update(updates, (error) => {
         if (error)
             alert(error);
         else window.location.href='index.html';
@@ -45,6 +51,9 @@ function guardarPreferencias(urlImgBg) {
 function guardarBG() {
     let storageRef = firebase.storage().ref('imagenes_bg/' + usuarioUID);
     let uploadTask = storageRef.put($('#input-img').prop('files')[0]);
+    if (!uploadTask){
+        guardarPreferencias('');
+    }
     imgLoader.hidden = false;
     uploadTask.on('state_changed', function (snapshot) {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

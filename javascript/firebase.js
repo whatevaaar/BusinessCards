@@ -1,4 +1,6 @@
-const COLOR_ORIGINAL = '#F6800E';
+const COLOR_ORIGINAL = '#f6800e';
+const COLOR_ORIGINAL_RGB = 'rgb(246, 128, 14)';
+let colorPreferencia = COLOR_ORIGINAL;
 
 var firebaseConfig = {
     apiKey: "AIzaSyB1Fagc4adWeHdpURSz4Bho6AECpapSeAk",
@@ -26,15 +28,15 @@ let user = null;
 firebase.auth().onAuthStateChanged(function (userL) {
     if (userL) {
         user = userL;
-        cargarPreferencias();
     }
 });
-function reestablecerPassword(){
+
+function reestablecerPassword() {
     let auth = firebase.auth();
     let emailAddress = document.getElementById('input-email').value;
-    auth.sendPasswordResetEmail(emailAddress).then(function() {
+    auth.sendPasswordResetEmail(emailAddress).then(function () {
         alert("Correo enviado con éxito");
-    }).catch(function(error) {
+    }).catch(function (error) {
         alert(error);
     });
 
@@ -46,55 +48,67 @@ function signOut() {
     });
 }
 
-function enviarCorreoDeConfirmacion(email){
+function enviarCorreoDeConfirmacion(email) {
     firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-        .then(function() {
+        .then(function () {
             alert('Te enviamos un correo de confirmación');
         })
-        .catch(function(error) {
+        .catch(function (error) {
             alert('Error al mandar mensaje de confirmación');
         });
 }
 
-function cambiarColor(colorPrimario) {
-    if(!colorPrimario || colorPrimario === COLOR_ORIGINAL)
-        return;
-    $(document).ready(function() {
-        $("#changeColor").on("click", function() {
-            $("*").css("color", function(i, val) {
-                val = val.replace(/\s/g, "");
-                if (rgbToHex(al) == COLOR_ORIGINAL || val == hexToRgb(COLOR_ORIGINAL)) {
-                    return colorPrimario;
-                }
-                else {
-                    return val;
-                }
-            });
-        });
-    });
+function fadeoutLoader(){
+    setTimeout(function () {
+
+        $('div#loading').fadeOut(500);
+        window.sr = ScrollReveal({reset: false});
+    }, 2000);
 }
 
-function cargarPreferencias(){
+function cargarPreferencias() {
     let query = firebase.database().ref('preferencias/' + user.uid);
     query.once('value').then((snapshot) => {
         let preferencia = snapshot.val();
-        if(preferencia){
+        if (preferencia) {
             document.getElementById('div-bg').src = preferencia.imgBg;
             cambiarColor(preferencia.colorPrimario);
-            }
+        }
     });
+    fadeoutLoader();
 }
 
-function hexToRgb(hex) {
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-        return r + r + g + g + b + b;
+function cargarPreferenciasDeUsuario(uid) {
+    let query = firebase.database().ref('preferencias/' + uid);
+    query.once('value').then((snapshot) => {
+        let preferencia = snapshot.val();
+        if (preferencia) {
+            document.getElementById('div-bg').src = preferencia.imgBg;
+            colorPreferencia = preferencia.colorPrimario;
+            cambiarColor(preferencia.colorPrimario);
+        }
     });
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? "rgb(" + parseInt(result[1], 16) + "," + parseInt(result[2], 16) + "," + parseInt(result[3], 16) + ")" : null;
+    fadeoutLoader();
 }
 
-function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+function cambiarColor(replaceWith) {
+    $('*').each(function () {
+        let color = $(this).css("color");
+        let colorBG = $(this).css("background");
+        let colorBGC = $(this).css("backgroundColor");
+        let colorBorder = $(this).css("borderLeftColor");
+        if (color === COLOR_ORIGINAL_RGB) {
+            $(this).css("color", replaceWith);
+        }
+        if (colorBG === COLOR_ORIGINAL_RGB) {
+            $(this).css("background", replaceWith);
+        }
+        if (colorBGC === COLOR_ORIGINAL_RGB) {
+            $(this).css("backgroundColor", replaceWith);
+        }
+        if (colorBorder === COLOR_ORIGINAL_RGB) {
+            $(this).css("borderLeftColor", replaceWith);
+        }
+    });
 }
 

@@ -12,6 +12,7 @@ function cargarParametroIDSiExiste(){
     if (idCandidato) {
         usuarioUID = idCandidato;
         cargarDatosDeUsuario();
+        cargarPreferenciasDeUsuario(usuarioUID);
     }
 }
 
@@ -32,10 +33,21 @@ const divEducacion = document.getElementById('div-educacion');
 const divSkills = document.getElementById('div-skills');
 const divIdiomas = document.getElementById('div-idiomas');
 
+function conseguirQR(){
+    const request = new Request('https://example.com', {method: 'POST', body: '{"foo": "bar"}'});
+    const url = request.url;
+    const method = request.method;
+    const credentials = request.credentials;
+    const bodyUsed = request.bodyUsed;
+
+}
+
 function mostrarElementosDeEdicion(){
     document.getElementById('a-editar').hidden = false;
     document.getElementById('a-personalizar').hidden = false;
     document.getElementById('a-agregar-skills').hidden = false;
+    document.getElementById('div-agregar-educacion').hidden = false;
+    document.getElementById('div-agregar-experiencia').hidden = false;
 }
 
 function crearLiCorreo(email) {
@@ -416,12 +428,12 @@ function crearApartadoExperiencia(childData, key) {
     divExperiencia.appendChild(divTimelineBlock);
 }
 
-
 function cargarDatosExperiencia() {
     let query = firebase.database().ref("usuarios/" + usuarioUID + "/experiencia");
     query.on("value", function (snapshot) {
         if (snapshot.empty)
             return;
+        divExperiencia.innerHTML = '';
         snapshot.forEach(function (childSnapshot) {
             let childData = childSnapshot.val();
             crearApartadoExperiencia(childData, childSnapshot.key);
@@ -435,6 +447,7 @@ function cargarDatosEducacion() {
     query.on("value", function (snapshot) {
         if (snapshot.empty)
             return;
+        divExperiencia.innerHTML = '';
         snapshot.forEach(function (childSnapshot) {
             let childData = childSnapshot.val();
             crearApartadoEducacion(childData, childSnapshot.key);
@@ -448,6 +461,7 @@ function cargarDatosSkills() {
     query.on("value", function (snapshot) {
         if (snapshot.empty)
             return;
+        divSkills.innerHTML = '';
         snapshot.forEach(function (childSnapshot) {
             let childData = childSnapshot.val();
             crearApartadoSkills(childData, childSnapshot.key);
@@ -461,12 +475,14 @@ function cargarDatosIdiomas() {
     query.on("value", function (snapshot) {
         if (snapshot.empty)
             return;
+        divIdiomas.innerHTML = '';
         snapshot.forEach(function (childSnapshot) {
             let childData = childSnapshot.val();
             crearApartadoIdiomas(childData, childSnapshot.key);
         });
     }, function (error) {
     });
+    cargarPreferencias();
 }
 
 function cargarDatosGenerales() {

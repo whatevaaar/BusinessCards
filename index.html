@@ -72,12 +72,6 @@
 ===========================================-->
 <header id="home">
     <nav id="theMenu" class="menu">
-
-        <div id="div-editar-bg">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                <i class="fas fa-pencil-alt"></i>
-            </button>
-        </div>
         <!--MENU-->
         <div id="menu-options" class="menu-wrap">
 
@@ -94,7 +88,7 @@
             <a href="#experience"><i class="title-icon fas fa-suitcase"></i>Experiencia</a>
             <a href="#contact"><i class="title-icon fas fa-envelope"></i>Contacto</a>
             <a hidden id="a-editar" href="editar.html"><i class="title-icon fas fa-cogs"></i>Editar</a>
-            <a hidden id="a-personalizar" href="editar.html"><i class="title-icon fas fa-pencil-alt"></i>Personalizar</a>
+            <a hidden id="a-personalizar" href="personalizar.html"><i class="title-icon fas fa-pencil-alt"></i>Personalizar</a>
 
         </div>
 
@@ -109,7 +103,7 @@
     </nav>
 
     <!--HEADER BACKGROUND-->
-    <div class="header-background section"><img id='div-bg' style="width: 100%; height: 100%"> </div>
+    <div class="header-background section"><img id='div-bg' style="width: 100%; height: 100%"></div>
 
 </header>
 
@@ -189,9 +183,12 @@
         </div>
 
         <div id="div-educacion"></div>
-        <div class="timeline-block">
-            <a href="agregar-historico.html"><div class="timeline-dot"><i class="fas fa-plus"></i></div></a>
-            </div>
+        <div hidden id="div-agregar-educacion" class="timeline-block">
+            <a href="#modalEducacion"
+               data-toggle="modal"
+               data-target="#modalEducacion">
+                <div class="timeline-dot"><i class="fas fa-plus"></i></div>
+            </a>
         </div>
     </div>
 </section>
@@ -204,7 +201,12 @@
     <div class="container">
         <!-- SECTION TITLE -->
         <div class="section-title">
-            <h4 class="text-uppercase text-center"><img src="images/icons/mixer.png" alt="demo">Skills <a hidden id="a-agregar-skills" href="agregar-skills.html">+</a></h4>
+            <h4 class="text-uppercase text-center"><img src="images/icons/mixer.png" alt="demo">Skills <a hidden
+                                                                                                          id="a-agregar-skills"
+                                                                                                          href="#modalSkills"
+                                                                                                          data-toggle="modal"
+                                                                                                          data-target="#modalSkills">+</a>
+            </h4>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -252,8 +254,12 @@
         </div>
 
         <div id="div-experiencia"></div>
-        <div class="timeline-block">
-            <a href="agregar-historico.html"><div class="timeline-dot"><i class="fas fa-plus"></i></div></a>
+        <div hidden id="div-agregar-experiencia" class="timeline-block">
+            <a href="#modalExperiencia"
+               data-toggle="modal"
+               data-target="#modalExperiencia">
+                <div class="timeline-dot"><i class="fas fa-plus"></i></div>
+            </a>
         </div>
     </div>
     </div>
@@ -341,7 +347,145 @@
     </div>
 </footer>
 
+<!--==========================================
+                      MOODALS
+===========================================-->
 
+<div class="modal fade" id="modalEducacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Educación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form onsubmit="agregarEducacion(); return false;">
+                    Educacion
+                    <div class="form-group">
+                        <label for="input-titulo">Titulo</label>
+                        <input type="text" class="form-control" id="input-titulo"
+                               required aria-describedby="emailHelp" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-instituto">Instituto</label>
+                        <input type="text" class="form-control" id="input-instituto"
+                               required aria-describedby="emailHelp" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-fecha-inicio-educacion">Fecha de inicio</label>
+                        <input type="date" required class="form-control" id="input-fecha-inicio-educacion">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-fecha-fin-educacion">Fecha de fin</label>
+                        <input type="date" class="form-control" id="input-fecha-fin-educacion">
+                    </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="agregarEducacion()" class="btn btn-warning">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalExperiencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Experiencia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form onsubmit="agregarExperiencia(); return false;">
+                    Experiencia
+                    <div class="form-group">
+                        <label for="input-puesto">Puesto</label>
+                        <input type="text" class="form-control" id="input-puesto"
+                               required aria-describedby="emailHelp" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-empresa">Empresa</label>
+                        <input type="text" class="form-control" id="input-empresa"
+                               required aria-describedby="emailHelp" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-fecha-inicio-puesto">Fecha de inicio</label>
+                        <input type="date" required class="form-control" id="input-fecha-inicio-puesto">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-fecha-fin-puesto">Fecha de fin (deja vacío si sigues laraborando aquí)</label>
+                        <input type="date" class="form-control" id="input-fecha-fin-puesto">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="agregarExperiencia()" class="btn btn-warning">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Skill</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="m-3">
+                    <form onsubmit="agregarIdioma(); return false;">
+                        Idiomas
+                        <div class="form-group">
+                            <label for="input-idioma">Idioma</label>
+                            <input type="text" class="form-control" id="input-idioma"
+                                   required aria-describedby="emailHelp" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="input-porcentaje-idioma">Porcentaje</label>
+                            <input type="range" class="form-control" id="input-porcentaje-idioma"
+                                   required aria-describedby="emailHelp" max="100" min="0" placeholder=""
+                                   oninput="this.nextElementSibling.value = this.value">
+                            <output></output>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar Idioma</button>
+                    </form>
+                </div>
+
+                <div class="m-3">
+                    <form onsubmit="agregarSkill(); return false;">
+                        Skills
+                        <div class="form-group">
+                            <label for="input-skill">Skill</label>
+                            <input type="text" class="form-control" id="input-skill"
+                                   required aria-describedby="emailHelp" placeholder="E.g Office, Photoshop">
+                        </div>
+                        <div class="form-group">
+                            <label for="input-porcentaje-skill">Porcentaje</label>
+                            <input type="range" class="form-control" id="input-porcentaje-skill"
+                                   required aria-describedby="emailHelp" max="100" min="0" placeholder=""
+                                   oninput="this.nextElementSibling.value = this.value">
+                            <output></output>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar Skill</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--==========================================
                   SCRIPTS
 ===========================================-->
@@ -365,6 +509,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
 <script src="javascript/firebase.js" type="text/javascript"></script>
 <script src="javascript/index.js" type="text/javascript"></script>
+<script src="javascript/registrar.js" type="text/javascript"></script>
 
 
 </body>
