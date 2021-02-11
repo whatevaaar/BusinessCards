@@ -17,3 +17,25 @@
     background-color: #F6800E;
     border-color: #fff;
 }
+
+#skills-card{
+    background-color: #F6800E;
+}
+
+.bg-black{
+    background-color: #262525;
+}
+
+.borderless{
+    border: none;
+}
+
+.skillbar-bar {
+    height: 4px;
+    width: 0;
+    background: #282828;
+}
+
+.slant{
+    height: 100%;
+}

@@ -1,6 +1,6 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const idCandidato = urlParams.get('id');
+const username = urlParams.get('username');
 const ENLACE = 'https://whatevaaar.github.io/BusinessCards/index.html'
 
 let usuarioUID = null;
@@ -8,16 +8,28 @@ let esPropia = false;
 
 window.onload = cargarParametroIDSiExiste();
 
+function encontrarUsuarioConUsername(username) {
+        let query = firebase.database().ref('usuarios');
+        query.once('value').then((snapshot) => {
+            snapshot.forEach( function (childSnap){
+                let tempUser = childSnap.val();
+                if(tempUser.username === username){
+                    usuarioUID = tempUser.uid;
+                    cargarDatosDeUsuario();
+                    cargarPreferenciasDeUsuario(usuarioUID);
+                }
+            })
+        });
+}
+
 function cargarParametroIDSiExiste(){
-    if (idCandidato) {
-        usuarioUID = idCandidato;
-        cargarDatosDeUsuario();
-        cargarPreferenciasDeUsuario(usuarioUID);
+    if (username) {
+        encontrarUsuarioConUsername(username);
     }
 }
 
 firebase.auth().onAuthStateChanged(function (user) {
-    if (user && !idCandidato) {
+    if (user && !username) {
         usuarioUID = user.uid;
         cargarDatosDeUsuario();
         mostrarElementosDeEdicion();
@@ -34,9 +46,9 @@ const divSkills = document.getElementById('div-skills');
 const divIdiomas = document.getElementById('div-idiomas');
 
 function mostrarElementosDeEdicion(){
-    document.getElementById('a-editar').hidden = false;
-    document.getElementById('a-personalizar').hidden = false;
-    document.getElementById('a-agregar-skills').hidden = false;
+    document.getElementById('a-editar').style.display = 'none';
+    document.getElementById('a-personalizar').style.display = 'none';
+    document.getElementById('a-agregar-skills').style.display = 'none';
     document.getElementById('div-agregar-educacion').hidden = false;
     document.getElementById('div-agregar-experiencia').hidden = false;
 }
@@ -115,6 +127,20 @@ function crearBotonLinkedIn(linkedin) {
     redesPersonales.appendChild(enlace);
 }
 
+function crearBotonTelegram(telegrama) {
+    let enlace = document.createElement('a');
+    let icono = document.createElement('i');
+    enlace.href = 'https://www.t.me/' + telegrama;
+    enlace.classList.add('social');
+    enlace.classList.add('btn-floating');
+    enlace.classList.add('blue');
+    enlace.classList.add('darken-3');
+    icono.classList.add('fab');
+    icono.classList.add('fa-telegram-plane');
+    enlace.appendChild(icono);
+    redesPersonales.appendChild(enlace);
+}
+
 function crearBotonLinkedInCoorporativo(linkedinCoorporativo) {
     let enlace = document.createElement('a');
     let icono = document.createElement('i');
@@ -157,18 +183,28 @@ function crearBotonWhatsapp(numeroTelefonico) {
     redesPersonales.appendChild(enlace);
 }
 
-function crearListenersCompartir(uid) {
+function crearListenersCompartir(username) {
     let textArea = document.getElementById('textarea-compartir').value;
+    document.getElementById('a-compartir-link').addEventListener("click", function() {
+        redireccionar(ENLACE + '?username=' + username);
+    }, false);
     document.getElementById('a-compartir-facebook').addEventListener("click", function() {
-        redireccionar('https://www.facebook.com/sharer/sharer.php?u=' + ENLACE + '?id=' + uid);
+        redireccionar('https://www.facebook.com/sharer/sharer.php?u=' + ENLACE + '?username=' + username);
     }, false);
     document.getElementById('a-compartir-linkedin').addEventListener("click", function() {
-        redireccionar('https://www.linkedin.com/shareArticle?mini=true&url=' + ENLACE + '?id=' + uid + '&title=&summary=' + textArea);
+        redireccionar('https://www.linkedin.com/shareArticle?mini=true&url=' + ENLACE + '?username=' + username + '&title=&summary=' + textArea);
     }, false);
     document.getElementById('a-compartir-twitter').addEventListener("click", function() {
-        redireccionar('https://twitter.com/intent/tweet?url=' + ENLACE + '?id=' + uid + '&text=' + textArea);
+        redireccionar('https://twitter.com/intent/tweet?url=' + ENLACE + '?username=' + username + '&text=' + textArea);
+    }, false);
+    document.getElementById('a-compartir-whatsapp').addEventListener("click", function() {
+        redireccionar('https://api.whatsapp.com/send?text=' + ENLACE + '?username=' + username + ' ' + textArea);
+    }, false);
+    document.getElementById('a-compartir-telegram').addEventListener("click", function() {
+        redireccionar('https://telegram.me/share/url?url=' + ENLACE + '?username=' + username + '&text=' + textArea);
     }, false);
 }
+
 
 function escribirDatosGenerales(usuario){
     document.title = 'Business Card de ' + usuario.nombre;
@@ -179,10 +215,10 @@ function escribirDatosGenerales(usuario){
     document.getElementById('img-perfil').src = usuario.imgPerfil;
     document.getElementById('a-cel').innerText = usuario.numeroTelefonico;
     document.getElementById('a-cel').href = 'tel:' + usuario.numeroTelefonico;
-    document.getElementById('a-admin').hidden = esAdmin(usuario.correo);
+    document.getElementById('a-admin').style.display = esAdmin(usuario.correo) ? '' : 'none';
     document.getElementById('span-ubicacion').innerText = usuario.estado + ', ' + usuario.pais;
     crearLiCorreo(usuario.email);
-    crearListenersCompartir(usuario.uid);
+    crearListenersCompartir(usuario.username);
     crearBotonWhatsapp(usuario.numeroTelefonico);
     if (usuario.pagina !== '')
         crearLiPagina(usuario.pagina);
@@ -198,6 +234,8 @@ function escribirDatosGenerales(usuario){
         crearBotonWhatsappCoorporativo(usuario.whatsappCoorporativo);
     if (usuario.twitter !== '')
         crearBotonTwitter(usuario.twitter);
+    if (usuario.telegram !== '')
+        crearBotonTelegram(usuario.telegram);
 }
 
 function crearLiPagina(enlace){
@@ -435,7 +473,7 @@ function cargarDatosEducacion() {
     query.on("value", function (snapshot) {
         if (snapshot.empty)
             return;
-        divExperiencia.innerHTML = '';
+        divEducacion.innerHTML = '';
         snapshot.forEach(function (childSnapshot) {
             let childData = childSnapshot.val();
             crearApartadoEducacion(childData, childSnapshot.key);
@@ -470,8 +508,8 @@ function cargarDatosIdiomas() {
         });
     }, function (error) {
     });
-    if (idCandidato)
-        cargarPreferenciasDeUsuario(idCandidato);
+    if (username)
+        cargarPreferenciasDeUsuario(usuarioUID);
     else
        cargarPreferencias();
 }

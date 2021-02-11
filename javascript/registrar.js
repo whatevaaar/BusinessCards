@@ -1,6 +1,15 @@
 const imgLoader = document.getElementById('img-loader');
+const spanDisponible = document.getElementById('span-disponible');
+const spanBuscando = document.getElementById('span-buscando');
+const spanNoDisponible = document.getElementById('span-no-disponible');
+const input = document.getElementById('input-usuario');
+var usuarioValido = false;
 
 function crearCuentaConCorreo() {
+    if (!usuarioValido ){
+        alert('Ingresa un nombre de usuario valido');
+        return;
+    }
     let email = document.getElementById("input-email").value;
     let password = document.getElementById("input-password").value;
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -21,10 +30,12 @@ function mostrarFormularioPerfil(){
 function guardarPerfil(urlImgPerfil){
     let user = firebase.auth().currentUser;
     let nombre = document.getElementById("input-nombre").value;
+    let username = document.getElementById("input-usuario").value;
     let email = document.getElementById("input-email-perfil").value;
     let numeroTelefonico = document.getElementById("input-cel").value;
     let facebook = document.getElementById("input-fb-personal").value;
     let twitter = document.getElementById("input-twitter").value;
+    let telegram = document.getElementById("input-telegram").value;
     let linkedin = document.getElementById("input-linkedin-personal").value;
     let linkedinCoorporativo = document.getElementById("input-linkedin-ccorporativo").value;
     let pais = document.getElementById("input-pais").value;
@@ -35,12 +46,14 @@ function guardarPerfil(urlImgPerfil){
     let expertise = document.getElementById("input-expertise").value;
     firebase.database().ref('usuarios/' + user.uid).set({
         nombre: nombre,
+        username: username,
         email: email,
         uid: user.uid,
         whatsappCoorporativo: whatsappCoorporativo,
         pais: pais,
         numeroTelefonico: numeroTelefonico,
         twitter: twitter,
+        telegram: telegram,
         linkedin: linkedin,
         linkedinCoorporativo: linkedinCoorporativo,
         facebookCoorporativo: facebookCoorporativo,
@@ -195,3 +208,60 @@ function limpiarApartadoIdiomas() {
     document.getElementById("input-porcentaje-idioma").value = "";
     document.getElementById("input-idioma").value = "";
 }
+
+function comprobarDisponibilidad(){
+    usuarioValido = false;
+    if (input === ''){
+        spanBuscando.style.display = 'none';
+        spanNoDisponible.style.display = 'none';
+        spanDisponible.style.display = 'none';
+        return;
+    }
+    spanBuscando.style.display = '';
+    let query = firebase.database().ref("usuarios");
+    query.on("value", function (snapshot) {
+        if (snapshot.empty)
+            return;
+        snapshot.forEach(function (childS) {
+                let usuario = childS.val();
+                if (usuario.username === input.value){
+                    spanNoDisponible.style.display = '';
+                    spanDisponible.style.display = 'none';
+                    spanBuscando.style.display = 'none';
+                    usuarioValido = false;
+                    return;
+                }
+        });
+        spanDisponible.style.display = '';
+        spanNoDisponible.style.display = 'none';
+        spanBuscando.style.display = 'none';
+        usuarioValido = true;
+        return;
+
+
+    }, function (error) {
+        alert('Error: ', error);
+    });
+}
+
+var delay = (function(){
+    var timer = 0;
+    return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
+
+$('#input-usuario').on("input", function() {
+    usuarioValido = false;
+    if (this.value.length === 0) {
+        spanDisponible.style.display = 'none';
+        spanNoDisponible.style.display = 'none';
+        spanBuscando.style.display = 'none';
+        return;
+    }
+    delay(function(){
+        comprobarDisponibilidad();
+    }, 1000 );
+});
+

@@ -2935,9 +2935,7 @@ span.badge {
     text-align: center;
     font-size: 1rem;
     line-height: inherit;
-    color: #757575;
     position: absolute;
-    right: 15px
 }
 
 span.badge.new {

@@ -1,4 +1,4 @@
-html, body{margin:0;padding:0;outline:0;display:block;font-family:'Roboto', sans-serif;font-size:15px;background-color:#262525;color:#7b7b7b;-webkit-font-smoothing:subpixel-antialiased;-webkit-text-stroke:1px transparent;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-overflow-scrolling:touch;}
+html, body{margin:0;padding:0;outline:0;display:block;font-family:'Roboto', sans-serif;font-size:15px;background-color:#262525;color:#fee;-webkit-font-smoothing:subpixel-antialiased;-webkit-text-stroke:1px transparent;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-overflow-scrolling:touch;}
 .section{position:relative;}
 .section .section-title{margin-bottom:18px;}
 .section .section-title .title-icon{margin-right:20px;color:#F6800E;}
@@ -124,7 +124,7 @@ body.scale-effect .btn-holder .btn-play{transform:scale(28);-webkit-transform:sc
 #home #menuToggle .bottom-transform{-webkit-transform:rotate(-45deg) !important;transform:rotate(-45deg) !important;-webkit-transform-origin:28% 43%;transform-origin:28% 43%;}
 #home .header-background{position:relative;display:block;width:100%;height:370px;background:url(../images/backgrounds/background.jpg) no-repeat;background-size:cover;background-position:center center;background-attachment:fixed;}
 #v-card-holder{overflow:visible;width:100%;height:auto;margin-top:-194px;}
-#v-card-holder #v-card{position:relative;width:100%;height:400px;overflow:hidden;-webkit-transition:height 1s, color 1s, margin 1s;transition:height 1s, color 1s, margin 1s;z-index:1;background:#262525;margin:-33px 3px 0 0;}
+#v-card-holder #v-card{position:relative;width:100%;overflow:hidden;-webkit-transition:height 1s, color 1s, margin 1s;transition:height 1s, color 1s, margin 1s;z-index:1;background:#262525;margin:-33px 3px 0 0;}
 #v-card-holder #v-card .info-headings{max-width:514px;}
 #v-card-holder #v-card .info-headings h4{display:block;width:100%;font-weight:900;color:#7b7b7b;text-shadow:2px 2px 4px rgba(0, 0, 0, 0.29);}
 #v-card-holder #v-card .info-headings h6{display:block;width:100%;font-weight:300;margin-top:-10px;margin-bottom:30px;font-size:1.2em;color:#7b7b7b;text-shadow:2px 2px 4px rgba(0, 0, 0, 0.29);}
@@ -200,14 +200,14 @@ body.scale-effect .btn-holder .btn-play{transform:scale(28);-webkit-transform:sc
 .timeline-block:nth-child(even) .timeline-content{float:right;}
 .timeline-block:nth-child(even) .timeline-content::before{top:25px;left:auto;right:101.2%;z-index:-2;}
 }
-#skills .card{background:#F6800E;}
-#skills .card .skills-title{margin:15px 0;}
-#skills .card .skills-title h6{color:#282828;text-shadow:2px 2px 4px rgba(0, 0, 0, 0.29);}
-#skills .card .skillbar{position:relative;display:block;margin-bottom:17px;margin-top:45px;width:100%;padding:0 0;background:#f9f9f93d;height:4px;-webkit-transition:0.4s linear;transition:0.4s linear;-webkit-transition-property:width, background-color;transition-property:width, background-color;}
-#skills .card .skillbar .skillbar-title{position:absolute;top:0;left:0;font-size:1em;}
-#skills .card .skillbar .skillbar-title span{display:block;padding:3px 0;margin-top:-25px;line-height:15px;color:#282828;}
-#skills .card .skillbar .skillbar-bar{height:4px;width:0;background:#282828;}
-#skills .card .skillbar .skill-bar-percent{position:absolute;right:1px;top:-20px;font-size:.8em;line-height:15px;color:#282828;}
+
+.skills-title{margin:15px 0;}
+.skills-title h6{color:#282828;text-shadow:2px 2px 4px rgba(0, 0, 0, 0.29);}
+.skillbar{position:relative;display:block;margin-bottom:17px;margin-top:45px;width:100%;padding:0 0;background:#f9f9f93d;height:4px;-webkit-transition:0.4s linear;transition:0.4s linear;-webkit-transition-property:width, background-color;transition-property:width, background-color;}
+.skillbar .skillbar-title{position:absolute;top:0;left:0;font-size:1em;}
+.skillbar .skillbar-title span{display:block;padding:3px 0;margin-top:-25px;line-height:15px;color:#282828;}
+.skillbar .skillbar-bar{height:4px;width:0;background:#282828;}
+.skillbar .skill-bar-percent{position:absolute;right:1px;top:-20px;font-size:.8em;line-height:15px;color:#282828;}
 #portfolios #portfolios-card{overflow:hidden;}
 #portfolios #portfolios-card .nav-tabs{border-bottom:0;text-align:center;margin-bottom:10px;}
 #portfolios #portfolios-card .nav-tabs li{float:none;margin:0;position:relative;display:inline-block;}

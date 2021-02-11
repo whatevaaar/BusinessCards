@@ -49,6 +49,11 @@ function guardarPreferencias(urlImgBg) {
 }
 
 function guardarBG() {
+    if (!$('#input-img').prop('files')[0]){
+        guardarPreferencias();
+        imgLoader.hidden = true;
+        return;
+    }
     let storageRef = firebase.storage().ref('imagenes_bg/' + usuarioUID);
     let uploadTask = storageRef.put($('#input-img').prop('files')[0]);
     if (!uploadTask){
@@ -69,7 +74,7 @@ function guardarBG() {
         imgLoader.hidden = true;
     }, function () {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-            guardarPreferencias(downloadURL)
+            guardarPreferencias(downloadURL);
             imgLoader.hidden = true;
         });
     });
