@@ -211,13 +211,12 @@ function limpiarApartadoIdiomas() {
 
 function comprobarDisponibilidad(){
     usuarioValido = false;
+    let validez = true;
     if (input === ''){
-        spanBuscando.style.display = 'none';
-        spanNoDisponible.style.display = 'none';
-        spanDisponible.style.display = 'none';
+        ocultarSpans();
         return;
     }
-    spanBuscando.style.display = '';
+    mostrarSpanBuscando();
     let query = firebase.database().ref("usuarios");
     query.on("value", function (snapshot) {
         if (snapshot.empty)
@@ -225,22 +224,19 @@ function comprobarDisponibilidad(){
         snapshot.forEach(function (childS) {
                 let usuario = childS.val();
                 if (usuario.username === input.value){
-                    spanNoDisponible.style.display = '';
-                    spanDisponible.style.display = 'none';
-                    spanBuscando.style.display = 'none';
-                    usuarioValido = false;
+                    validez = false;
                     return;
                 }
         });
-        spanDisponible.style.display = '';
-        spanNoDisponible.style.display = 'none';
-        spanBuscando.style.display = 'none';
-        usuarioValido = true;
+        usuarioValido = validez;
+        if (usuarioValido)
+            mostrarSpanDisponible();
+        else
+            mostrarSpanNoDisponible();
         return;
-
-
     }, function (error) {
         alert('Error: ', error);
+        ocultarSpans();
     });
 }
 
@@ -254,14 +250,35 @@ var delay = (function(){
 
 $('#input-usuario').on("input", function() {
     usuarioValido = false;
-    if (this.value.length === 0) {
-        spanDisponible.style.display = 'none';
-        spanNoDisponible.style.display = 'none';
-        spanBuscando.style.display = 'none';
-        return;
+    if (this.value.length === 0)
+        ocultarSpans();
+    else {
+        delay(function () {
+            comprobarDisponibilidad();
+        }, 500);
     }
-    delay(function(){
-        comprobarDisponibilidad();
-    }, 1000 );
 });
 
+function mostrarSpanDisponible(){
+    spanDisponible.style.display = '';
+    spanNoDisponible.style.display = 'none';
+    spanBuscando.style.display = 'none';
+}
+
+function mostrarSpanNoDisponible(){
+    spanDisponible.style.display = 'none';
+    spanNoDisponible.style.display = '';
+    spanBuscando.style.display = 'none';
+}
+
+function mostrarSpanBuscando(){
+    spanDisponible.style.display = 'none';
+    spanNoDisponible.style.display = 'none';
+    spanBuscando.style.display = '';
+}
+
+function ocultarSpans(){
+    spanDisponible.style.display = 'none';
+    spanNoDisponible.style.display = 'none';
+    spanBuscando.style.display = 'none';
+}

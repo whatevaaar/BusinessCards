@@ -46,9 +46,9 @@ const divSkills = document.getElementById('div-skills');
 const divIdiomas = document.getElementById('div-idiomas');
 
 function mostrarElementosDeEdicion(){
-    document.getElementById('a-editar').style.display = 'none';
-    document.getElementById('a-personalizar').style.display = 'none';
-    document.getElementById('a-agregar-skills').style.display = 'none';
+    document.getElementById('a-editar').style.display = '';
+    document.getElementById('a-personalizar').style.display = '';
+    document.getElementById('a-agregar-skills').style.display = '';
     document.getElementById('div-agregar-educacion').hidden = false;
     document.getElementById('div-agregar-experiencia').hidden = false;
 }

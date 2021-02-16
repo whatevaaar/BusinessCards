@@ -80,10 +80,13 @@ function cargarPreferencias() {
         if (preferencia) {
             document.getElementById('div-bg').src = preferencia.imgBg;
             cambiarColor(preferencia.colorPrimario);
+            if (preferencia.hasOwnProperty('fuente'))
+                cambiarFuente()
         }
     });
     fadeoutLoader();
 }
+
 
 function cargarPreferenciasDeUsuario(uid) {
     let query = firebase.database().ref('preferencias/' + uid);
@@ -93,6 +96,8 @@ function cargarPreferenciasDeUsuario(uid) {
             document.getElementById('div-bg').src = preferencia.imgBg;
             colorPreferencia = preferencia.colorPrimario;
             cambiarColor(preferencia.colorPrimario);
+            if (preferencia.hasOwnProperty('fuente'))
+                cambiarFuente()
         }
     });
     fadeoutLoader();
@@ -119,3 +124,6 @@ function cambiarColor(replaceWith) {
     });
 }
 
+function cambiarFuente(fuente) {
+    $('*').css("font-family", fuente);
+}

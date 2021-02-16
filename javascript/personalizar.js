@@ -1,5 +1,6 @@
 const imgLoader = document.getElementById('img-loader');
 const colorPrimario = document.getElementById('input-color')
+const fuente = document.getElementById('input-fuente')
 
 let usuarioUID;
 
@@ -15,7 +16,7 @@ function iniciarJsColor(colorPrimario) {
     jscolor.presets.default = {
         value: colorPrimario,
         position: 'right',
-        backgroundColor: '#333',
+        backgroundColor: colorPrimario,
         palette: '#fff #000 #808080 #996e36 #f55525 #ffe438 #88dd20 #22e0cd #269aff #bb1cd4',
     };
 }
@@ -35,11 +36,12 @@ function guardarPreferencias(urlImgBg) {
     if (urlImgBg)
         updates = {
             imgBg: urlImgBg,
-            colorPrimario: colorPrimario.value
+            colorPrimario: colorPrimario.value,
+            fuente: fuente.value
         }
     else
         updates = {
-            colorPrimario: colorPrimario.value
+            colorPrimario: colorPrimario.value,
         }
     firebase.database().ref('preferencias/' + usuarioUID).update(updates, (error) => {
         if (error)

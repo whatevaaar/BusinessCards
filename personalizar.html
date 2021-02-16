@@ -9,7 +9,7 @@
     <meta name="keywords" content="">
 
 
-    <title>Personmlizar | Business Card</title>
+    <title>Personalizar | Business Card</title>
     <link rel="icon" href="images/site/fav-icon.png">
 
     <!--APPLE TOUCH ICON-->
@@ -101,7 +101,7 @@
                         <form onsubmit="guardarBG(); return false;">
                             <div class="form-row">
                                 <div class="col">
-                                    <label for="input-img">Imaagen de fondo</label>
+                                    <label for="input-img">Imagen de fondo</label>
                                     <input type="file" class="form-control is-valid" id="input-img"
                                            placeholder="Selecciona una imagen" accept="image/*">
                                 </div>
@@ -112,7 +112,15 @@
                                     <input value="#F6800E" data-jscolor="{}" id="input-color">
                                 </div>
                             </div>
-                            <div class="form-row"></div>
+                            <div class="form-row">
+                                <label for="input-fuente">Fuente</label>
+                                <select id="input-fuente">
+                                    <option value="Arial">Arial</option>
+                                    <option value="Verdana ">Verdana </option>
+                                    <option value="Impact ">Impact </option>
+                                    <option value="Comic Sans MS">Comic Sans MS</option>
+                                </select>
+                            </div>
                             <button class="btn btn-primary" type="submit">Actualizar</button>
                             <img hidden id="img-loader" src="images/icons/small-loader.gif">
                         </form>
