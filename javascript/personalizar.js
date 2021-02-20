@@ -41,6 +41,7 @@ function guardarPreferencias(urlImgBg) {
         }
     else
         updates = {
+            fuente: fuente.value,
             colorPrimario: colorPrimario.value,
         }
     firebase.database().ref('preferencias/' + usuarioUID).update(updates, (error) => {

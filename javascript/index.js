@@ -186,7 +186,7 @@ function crearBotonWhatsapp(numeroTelefonico) {
 function crearListenersCompartir(username) {
     let textArea = document.getElementById('textarea-compartir').value;
     document.getElementById('a-compartir-link').addEventListener("click", function() {
-        redireccionar(ENLACE + '?username=' + username);
+        copiarAClipboard(ENLACE + '?username=' + username)
     }, false);
     document.getElementById('a-compartir-facebook').addEventListener("click", function() {
         redireccionar('https://www.facebook.com/sharer/sharer.php?u=' + ENLACE + '?username=' + username);
@@ -532,4 +532,13 @@ function cargarDatosDeUsuario() {
 function redireccionar(url) {
     var win = window.open(url, '_blank');
     win.focus();
+}
+
+function copiarAClipboard(value) {
+    var tempInput = document.createElement("input");
+    tempInput.value = value;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
 }

@@ -97,7 +97,7 @@ function cargarPreferenciasDeUsuario(uid) {
             colorPreferencia = preferencia.colorPrimario;
             cambiarColor(preferencia.colorPrimario);
             if (preferencia.hasOwnProperty('fuente'))
-                cambiarFuente()
+                cambiarFuente(preferencia.fuente);
         }
     });
     fadeoutLoader();
@@ -125,5 +125,7 @@ function cambiarColor(replaceWith) {
 }
 
 function cambiarFuente(fuente) {
-    $('*').css("font-family", fuente);
+    $('*').each(function () {
+        $(this).css("font-family", fuente);
+    });
 }
