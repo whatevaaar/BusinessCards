@@ -5,6 +5,11 @@ const spanNoDisponible = document.getElementById('span-no-disponible');
 const input = document.getElementById('input-usuario');
 var usuarioValido = false;
 
+function desactivarCorreo(email) {
+    let refString = 'correos_para_activar/' + email;
+    firebase.database().ref(refString).remove();
+}
+
 function crearCuentaConCorreo() {
     if (!usuarioValido ){
         alert('Ingresa un nombre de usuario valido');
@@ -12,14 +17,22 @@ function crearCuentaConCorreo() {
     }
     let email = document.getElementById("input-email").value;
     let password = document.getElementById("input-password").value;
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(() => {
-            mostrarFormularioPerfil();
-            enviarCorreoDeConfirmacion(email);
-        })
-        .catch((error) => {
-            alert(error);
-        });
+    firebase.database().ref('correos_para_activar/').orderByChild("email").equalTo(email).once("value", snapshot => {
+        if (snapshot.exists()){
+            desactivarCorreo(email)
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    mostrarFormularioPerfil();
+                    enviarCorreoDeConfirmacion(email);
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+        }
+        else{
+            alert('Esta cuenta de correo no ha sido activada aún para usar VCard');
+        }
+    });
 }
 
 function mostrarFormularioPerfil(){

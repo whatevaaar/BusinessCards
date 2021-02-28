@@ -1,6 +1,6 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const username = urlParams.get('username');
+const username = urlParams.get('u');
 const ENLACE = 'https://whatevaaar.github.io/BusinessCards/index.html'
 
 let usuarioUID = null;
@@ -46,11 +46,15 @@ const divSkills = document.getElementById('div-skills');
 const divIdiomas = document.getElementById('div-idiomas');
 
 function mostrarElementosDeEdicion(){
-    document.getElementById('a-editar').style.display = '';
-    document.getElementById('a-personalizar').style.display = '';
-    document.getElementById('a-agregar-skills').style.display = '';
-    document.getElementById('div-agregar-educacion').hidden = false;
-    document.getElementById('div-agregar-experiencia').hidden = false;
+    firebase.database().ref("suspendidos").orderByChild("uid").equalTo(usuarioUID).once("value",snapshot => {
+        if (!snapshot.exists()){
+            document.getElementById('a-editar').style.display = '';
+            document.getElementById('a-personalizar').style.display = '';
+            document.getElementById('a-agregar-skills').style.display = '';
+            document.getElementById('div-agregar-educacion').hidden = false;
+            document.getElementById('div-agregar-experiencia').hidden = false;
+        }
+    });
 }
 
 function crearLiCorreo(email) {
@@ -72,7 +76,6 @@ function crearLiCorreo(email) {
     spanContent.appendChild(aEnlace);
     ulPerfil.appendChild(liClearfix);
 }
-
 
 function crearBotonFacebook(facebook) {
     let enlace = document.createElement('a');
@@ -186,25 +189,24 @@ function crearBotonWhatsapp(numeroTelefonico) {
 function crearListenersCompartir(username) {
     let textArea = document.getElementById('textarea-compartir').value;
     document.getElementById('a-compartir-link').addEventListener("click", function() {
-        copiarAClipboard(ENLACE + '?username=' + username)
+        copiarAClipboard(ENLACE + '?u=' + username)
     }, false);
     document.getElementById('a-compartir-facebook').addEventListener("click", function() {
-        redireccionar('https://www.facebook.com/sharer/sharer.php?u=' + ENLACE + '?username=' + username);
+        redireccionar('https://www.facebook.com/sharer/sharer.php?u=' + ENLACE + '?u=' + username);
     }, false);
     document.getElementById('a-compartir-linkedin').addEventListener("click", function() {
-        redireccionar('https://www.linkedin.com/shareArticle?mini=true&url=' + ENLACE + '?username=' + username + '&title=&summary=' + textArea);
+        redireccionar('https://www.linkedin.com/shareArticle?mini=true&url=' + ENLACE + '?u=' + username + '&title=&summary=' + textArea);
     }, false);
     document.getElementById('a-compartir-twitter').addEventListener("click", function() {
-        redireccionar('https://twitter.com/intent/tweet?url=' + ENLACE + '?username=' + username + '&text=' + textArea);
+        redireccionar('https://twitter.com/intent/tweet?url=' + ENLACE + '?u=' + username + '&text=' + textArea);
     }, false);
     document.getElementById('a-compartir-whatsapp').addEventListener("click", function() {
-        redireccionar('https://api.whatsapp.com/send?text=' + ENLACE + '?username=' + username + ' ' + textArea);
+        redireccionar('https://api.whatsapp.com/send?text=' + ENLACE + '?u=' + username + ' ' + textArea);
     }, false);
     document.getElementById('a-compartir-telegram').addEventListener("click", function() {
-        redireccionar('https://telegram.me/share/url?url=' + ENLACE + '?username=' + username + '&text=' + textArea);
+        redireccionar('https://telegram.me/share/url?url=' + ENLACE + '?u=' + username + '&text=' + textArea);
     }, false);
 }
-
 
 function escribirDatosGenerales(usuario){
     document.title = 'Business Card de ' + usuario.nombre;
@@ -535,10 +537,5 @@ function redireccionar(url) {
 }
 
 function copiarAClipboard(value) {
-    var tempInput = document.createElement("input");
-    tempInput.value = value;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
+    navigator.clipboard.writeText(value);
 }
