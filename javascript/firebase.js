@@ -126,6 +126,7 @@ function cambiarColor(replaceWith) {
 
 function cambiarFuente(fuente) {
     $('*').each(function () {
-        $(this).css("font-family", fuente);
+       if(!$(this).is("i"))
+            $(this).css("font-family", fuente);
     });
 }
